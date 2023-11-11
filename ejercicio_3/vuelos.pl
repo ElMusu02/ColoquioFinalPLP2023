@@ -18,7 +18,7 @@ valor(14, 30, 197). % Santiago - Mendoza
 
 
 % Hechos que almacenan las ciudades 
-% ciudad(id, nombre)
+% ciudad(id, nombre, pais)
 ciudad(1, 'Buenos Aires', 'Argentina').
 ciudad(2, 'Madrid', 'España').
 ciudad(3, 'Montevideo', 'Uruguay').
@@ -63,7 +63,7 @@ vuelo(13, 'AR1303', 6, 1, ['LU', 'MA', 'MI', 'JU', 'VI', 'SA', 'DO'], 6, '17:15'
 vuelo(14, 'AR1300', 1, 7, ['LU', 'MA', 'MI', 'JU', 'VI', 'SA', 'DO'], 8, '23:55', '09:00', 6, 1).
 vuelo(15, 'AR1301', 7, 1, ['LU', 'MA', 'MI', 'JU', 'VI', 'SA', 'DO'], 8, '15:35', '04:35', 6, -1).
 vuelo(16, 'AR1880', 1, 8, ['LU', 'MA', 'MI', 'JU', 'VI', 'SA', 'DO'], 12, '15:50', '19:25', 5, 0).
-vuelo(17, 'AR1881', 1, 8, ['LU', 'MA', 'MI', 'JU', 'VI', 'SA', 'DO'], 12, '21:00', '00:25', 5, 0).
+vuelo(17, 'AR1881', 8, 1, ['LU', 'MA', 'MI', 'JU', 'VI', 'SA', 'DO'], 12, '21:00', '00:25', 5, 0).
 vuelo(18, 'AR1238', 1, 9, ['LU', 'MA', 'MI', 'JU', 'VI', 'SA', 'DO'], 11, '16:15', '18:55', 2, 1).
 vuelo(19, 'AR1239', 9, 1, ['LU', 'MA', 'MI', 'JU', 'VI', 'SA', 'DO'], 11, '19:50', '22:45', 2, -1).
 vuelo(20, 'AR1364', 1, 10, ['LU', 'MA', 'MI', 'JU', 'VI', 'SA', 'DO'], 2, '18:50', '21:35', 3, 2).
@@ -95,16 +95,41 @@ avion(8, 'Airbus', 'A330-200', 10000, 186, 36).
 % Hechos que almacenan los porcentajes sobre la base de los precios de asientos,
 % para la clase turista
 % precio_turista(tipo, tasas_impuestos, cargos_empresa)
-precio_turista('Nacional', 0.20, 0.05).
-precio_turista('Internacional', 0.60, 0.35).
+precio_turista_nacional(0.20, 0.05).
+precio_turista_internacional(0.60, 0.35).
 
 % Hecho que almacena el precio en clase bussines sobre el precio turista 
-precio_bussines(2.2).
+precio_bussines(1.2).
+
+% Hecho que almacena la tripulacion de un vuelo 
+% tripulacion_vuelo___(copiloto, azafata)  
+tripulacion_vuelo_largo(2, 25).
+tripulacion_vuelo_corto(1, 20).
 
 % =============================================================================
 
 % 1. Informar las ciudades destino de una determinada ciudad origen
 
+%% ciudades_destino(+O, -Destino)
+%
+%  Busca las ciudades de destino dada una ciudad de origen O.
+%
+%  Por ejemplo,
+%  ==
+%  ?- ciudades_destino('Buenos Aires', Destino).
+%  Destino = 'Roma' ;
+%  Destino = 'Madrid' ;
+%  Destino = 'Montevideo' ;
+%  Destino = 'Madrid' ;
+%  Destino = 'Punta Cana' ;
+%  Destino = 'Miami' ;
+%  Destino = 'New York' ;
+%  Destino = 'Ushuaia' ;
+%  Destino = 'Ushuaia' ;
+%  Destino = 'Sao Paulo' ;
+%  Destino = 'Lima' ;
+%  Destino = 'Santiago'.
+%  ==
 ciudades_destino(O, Destino) :- 
 	ciudad(IdOrigen, O, _),
 	vuelo(_, _, IdOrigen, IdDestino, _, _, _, _, _, _),
@@ -115,8 +140,60 @@ ciudades_destino(O, Destino) :-
 % 2. Informar las rutas que realiza un modelo determinado de avión o los 
 %    aviones de un fabricante específico. 
 %
-% ¿Determinar mas datos sobre el avion?
+% ¿DETERMINAR MAS DATOS SOBRE EL AVION?
 
+%% rutas_modelo_o_fabricante(+M, +F, -Origen, -Destino, -IdAvion)
+%
+%  Busca las rutas que realiza un modelo de avion M, o un fabricante F.
+%
+%  Por ejemplo,
+%  ==
+%  ?- rutas_modelo_o_fabricante(_, 'Boeing', Origen, Destino, IdAvion).
+%  Origen = 'Buenos Aires',
+%  Destino = 'Montevideo',
+%  IdAvion = 1 ;
+%  Origen = 'Montevideo',
+%  Destino = 'Buenos Aires',
+%  IdAvion = 1 ;
+%  Origen = 'Buenos Aires',
+%  Destino = 'Santiago',
+%  IdAvion = 1 ;
+%  Origen = 'Santiago',
+%  Destino = 'Mendoza',
+%  IdAvion = 1 ;
+%  Origen = 'Mendoza',
+%  Destino = 'Buenos Aires',
+%  IdAvion = 1 ;
+%  Origen = 'Buenos Aires',
+%  Destino = 'Sao Paulo',
+%  IdAvion = 2 ;
+%  Origen = 'Sao Paulo',
+%  Destino = 'Buenos Aires',
+%  IdAvion = 2 ;
+%  Origen = 'Buenos Aires',
+%  Destino = 'Lima',
+%  IdAvion = 3 ;
+%  Origen = 'Lima',
+%  Destino = 'Buenos Aires',
+%  IdAvion = 3 ;
+%
+%  ?- rutas_modelo_o_fabricante('737-700', _, Origen, Destino, IdAvion).
+%  Origen = 'Buenos Aires',
+%  Destino = 'Montevideo',
+%  IdAvion = 1 ;
+%  Origen = 'Montevideo',
+%  Destino = 'Buenos Aires',
+%  IdAvion = 1 ;
+%  Origen = 'Buenos Aires',
+%  Destino = 'Santiago',
+%  IdAvion = 1 ;
+%  Origen = 'Santiago',
+%  Destino = 'Mendoza',
+%  IdAvion = 1 ;
+%  Origen = 'Mendoza',
+%  Destino = 'Buenos Aires',
+%  IdAvion = 1.
+%  ==
 rutas_modelo_o_fabricante(M, F, Origen, Destino, IdAvion) :-
 	avion(IdAvion, _, M, _, _, _),
 	vuelo(_, _, IdOrigen, IdDestino, _, _, _, _, IdAvion, _),
@@ -129,9 +206,42 @@ rutas_modelo_o_fabricante(M, F, Origen, Destino, IdAvion) :-
 % 3. Informar las rutas que puede hacer un determinado avión, considerando su 
 %    rango de alcance y la distancia de la ruta. 
 
-rutas_avion(I, Origen, Destino) :-
+%% rutas_avion(+A, -Origen, -Destino)
+%
+%  Busca las rutas que puede realizar un modelo de avion A, teniendo en cuenta 
+%  su rango de alcance y las distancia de las rutas.
+%
+%  Por ejemplo,
+%  ==
+%  ?- rutas_avion(2, Origen, Destino).
+%  Origen = 'Buenos Aires',
+%  Destino = 'Lima' ;
+%  Origen = 'Lima',
+%  Destino = 'Buenos Aires' ;
+%  Origen = 'Cordoba',
+%  Destino = 'Buenos Aires' ;
+%  Origen = 'Mendoza',
+%  Destino = 'Buenos Aires' ;
+%  Origen = 'Buenos Aires',
+%  Destino = 'Montevideo' ;
+%  Origen = 'Montevideo',
+%  Destino = 'Buenos Aires' ;
+%  Origen = 'Buenos Aires',
+%  Destino = 'Santiago' ;
+%  Origen = 'Santiago',
+%  Destino = 'Mendoza' ;
+%  Origen = 'Buenos Aires',
+%  Destino = 'Sao Paulo' ;
+%  Origen = 'Sao Paulo',
+%  Destino = 'Buenos Aires' ;
+%  Origen = 'Buenos Aires',
+%  Destino = 'Ushuaia' ;
+%  Origen = 'Buenos Aires',
+%  Destino = 'Ushuaia' ;
+%  ==
+rutas_avion(A, Origen, Destino) :-
 	valor(IdValor, _, Distancia),
-	avion(I, _, _, Rango, _, _),
+	avion(A, _, _, Rango, _, _),
 	integer(Rango),
 	integer(Distancia),
 	Distancia =< Rango,
@@ -143,9 +253,21 @@ rutas_avion(I, Origen, Destino) :-
 
 % 4. Informar los vuelos que se realizan un determinado día, ordenados por hora
 %    de salida. 
+%
+% FALTA ORDENAR POR HORA
 
 :- use_module(library(lists)).
 
+%% vuelos_dia(+D, -IdVuelo)
+%
+%  Busca los vuelos dado un dia D, que puede ser 'LU', 'MA', 'MI', 'JU', 
+%  'VI', 'SA' o 'DO'. Los vuelos estan ordenados por horario de salida.
+%
+%  Por ejemplo,
+%  ==
+%  ?- vuelos_dia('LU', IdVuelo).
+%  
+%  ==
 vuelos_dia(D, IdVuelo) :-
 	vuelo(IdVuelo, _, _, _, Frecuencia, _, _, _, _, _),
 	member(D, Frecuencia).
@@ -156,6 +278,8 @@ vuelos_dia(D, IdVuelo) :-
 % 5. Calcular la duración de un determinado vuelo, considerando los horarios de 
 %    salida y llegada y las diferencias horarias que existen entre las ciudades 
 %    de origen y destino. 
+
+:- use_module(library(date_time)).
 
 %duracion_vuelo(N, Duracion) :-
 %	vuelo(_, N, _, _, _, _, Salida, Llegada, _, Diferecia),
@@ -178,6 +302,21 @@ vuelos_dia(D, IdVuelo) :-
 %    del pasaje en clase business se obtiene sumandole un 120% al precio del 
 %    pasaje en clase turista.
 
+%% precio(+N, -PrecioTurista, -PrecioBussines)
+%
+%  Busca los precios en clase turista y bussines, dado un numero de vuelo N. Se 
+%  le solicita ingresar al usuario la cotizacion oficial del dolar para calcular 
+%  los precios en pesos argentinos.
+%
+%  Por ejemplo,
+%  ==
+%  ?- precio('AR1140', PrecioTurista, PrecioBussines).
+%  Ingrese la cotizacion oficial del dolar: 
+%  |: 100.
+%
+%  PrecioTurista = 156000.00000000003,
+%  PrecioBussines = 343200.0000000001.
+%  ==
 precio(N, PrecioTurista, PrecioBussines) :-
 	vuelo(_, N, IdOrigen, IdDestino, _, IdValor, _, _, _, _),
 	valor(IdValor, _Precio, _),
@@ -186,13 +325,12 @@ precio(N, PrecioTurista, PrecioBussines) :-
 	writeln('Ingrese la cotizacion oficial del dolar: '),
 	read(_Cotizacion),
 	(PaisOrigen = PaisDestino ->
-		precio_turista('Nacional', __Impuesto, __Cargo),
-		PrecioTurista is (_Precio * (1 + __Impuesto + __Cargo)) * _Cotizacion
-	;	precio_turista('Internacional', __Impuesto, __Cargo),
-		PrecioTurista is (_Precio * (1 + __Impuesto + __Cargo)) * _Cotizacion
+		precio_turista_nacional(__Impuesto, __Cargo)
+	;	precio_turista_internacional(__Impuesto, __Cargo)
 	),
+	PrecioTurista is (_Precio * (1 + __Impuesto + __Cargo)) * _Cotizacion,
 	precio_bussines(__CargoBussines),
-	PrecioBussines is PrecioTurista * __CargoBussines. 
+	PrecioBussines is PrecioTurista * (1 + __CargoBussines). 
 
 % =============================================================================
 
@@ -203,16 +341,24 @@ precio(N, PrecioTurista, PrecioBussines) :-
 %    cantidad de personas que componen la tripulación completa (piloto mas 
 %    copiloto/s mas auxiliares de abordo) para un determinado vuelo.
 
+%% tripulacion(+N, -Piloto, -Copilotos, -Azafatas)
+%
+%  Busca la cantidad de tripulantes Pilito, Copilotos y Azafatas que requiere 
+%  un vuelo N. 
+%
+%  Por ejemplo,
+%  ==
+%  ?- 
+%  ==
 tripulacion(N, Piloto, Copilotos, Azafatas) :-
-	duracion_vuelo(N, Duracion),
+	duracion_vuelo(N, Duracion),	% falta implementar el inciso 5
 	vuelo(_, N, _, _, _, _, _, _, IdAvion, _),
 	avion(IdAvion, _, _, _, Turista, Business),
 	(Duracion > 8 ->
-		Azafatas is round((Turista + Business) / 25),
-		Copilotos is 2
-	;	Azafatas is round((Turista + Business) / 20),
-		Copilotos is 1
+		tripulacion_vuelo_largo(Copilotos, __Asafata)
+	;	tripulacion_vuelo_corto(Copilotos, __Asafata)	
 	),
+	Azafatas is round((Turista + Business) / __Asafata),
 	Piloto is 1.
 
 % =============================================================================
@@ -221,20 +367,17 @@ tripulacion(N, Piloto, Copilotos, Azafatas) :-
 %    determinado de pasajes en clase turista y otro porcentaje de pasajes en 
 %    clase business para un vuelo específico.
 %
-% ¿La ganacia se genera solo sobre los cargos de la empresa?
-% turista internacional 35%
-% turista nacional 5%
-% bussines 120% sobre turista
 
-/* ganancia(N, T, B, TuristaVendidos, BussinesVendidos) :- 
-	vuelo(_, N, _, _, _, _, _, _, IdAvion, _),
-	avion(IdAvion, _, _, _, Turista, Bussines),
-	integer(Turista),
-	integer(Bussines),
-	TuristaVendidos is ((Turista * T) / 100),
-	BussinesVendidos is ((Bussines * B) / 100).
- */
-
+%% ganancia(+N, -Piloto, -Copilotos, -Azafatas)
+%
+%  Calcula la ganancia en dolares dado un vuelo N, el porcentaje de vendido del 
+%  vuelo en clase turista T y bussines B. 
+%
+%  Por ejemplo,
+%  ==
+%  ?- ganancia('AR1386', 50, 50, Ganancia).
+%  Ganancia = 9816.0.
+%  ==
 ganancia(N, T, B, Ganancia) :-
 	vuelo(_, N, IdOrigen, IdDestino, _, IdValor, _, _, IdAvion, _),
 	avion(IdAvion, _, _, _, Turista, Bussines),
@@ -246,11 +389,11 @@ ganancia(N, T, B, Ganancia) :-
 	ciudad(IdOrigen, _, PaisOrigen),
 	ciudad(IdDestino, _, PaisDestino),
 	(PaisOrigen = PaisDestino ->
-		precio_turista('Nacional', _, __Cargo),
-		PrecioTurista is _Precio * (1 + __Cargo)
-	;	precio_turista('Internacional', _, __Cargo),
-		PrecioTurista is _Precio * (1 + __Cargo)
+		precio_turista_nacional(__Impuestos, __Cargo)
+	;	precio_turista_internacional(__Impuestos, __Cargo)
 	),
+	PrecioTurista is _Precio * (1 + __Impuestos + __Cargo),
+	GananciaTurista is _Precio * (1 + __Cargo),
 	precio_bussines(__CargoBussines),
-	PrecioBussines is PrecioTurista * __CargoBussines,
-	Ganancia is TuristaVendidos * PrecioTurista + BussinesVendidos * PrecioBussines.
+	GananciaBussines is PrecioTurista * (1 + __CargoBussines),
+	Ganancia is TuristaVendidos * GananciaTurista + BussinesVendidos * GananciaBussines.
