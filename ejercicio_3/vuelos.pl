@@ -91,6 +91,16 @@ avion(6, 'Airbus', 'A330-200', 12000, 248, 24).
 avion(7, 'Airbus', 'A330-200', 10000, 244, 25).
 avion(8, 'Airbus', 'A330-200', 10000, 186, 36).
 
+
+% Hechos que almacenan los porcentajes sobre la base de los precios de asientos,
+% para la clase turista
+% precio_turista(tipo, tasas_impuestos, cargos_empresa)
+precio_turista('Nacional', 0.20, 0.05).
+precio_turista('Internacional', 0.60, 0.35).
+
+% Hecho que almacena el precio en clase bussines sobre el precio turista 
+precio_bussines(2.2).
+
 % =============================================================================
 
 % 1. Informar las ciudades destino de una determinada ciudad origen
@@ -176,7 +186,71 @@ precio(N, PrecioTurista, PrecioBussines) :-
 	writeln('Ingrese la cotizacion oficial del dolar: '),
 	read(_Cotizacion),
 	(PaisOrigen = PaisDestino ->
-		PrecioTurista is (_Precio * 1.25) * _Cotizacion
-	;	PrecioTurista is (_Precio * 1.95) * _Cotizacion
+		precio_turista('Nacional', __Impuesto, __Cargo),
+		PrecioTurista is (_Precio * (1 + __Impuesto + __Cargo)) * _Cotizacion
+	;	precio_turista('Internacional', __Impuesto, __Cargo),
+		PrecioTurista is (_Precio * (1 + __Impuesto + __Cargo)) * _Cotizacion
 	),
-	PrecioBussines is PrecioTurista * 2.2. 
+	precio_bussines(__CargoBussines),
+	PrecioBussines is PrecioTurista * __CargoBussines. 
+
+% =============================================================================
+
+% 7. Si se considera que un vuelo que dura más de 8 horas debe tener 1 auxiliar 
+%    de abordo (azafata) cada 25 asientos del avión, más 1 piloto y 2 copilotos, 
+%    y uno que dura menos de 8 horas debe tener 1 auxiliar de abordo (azafata) 
+%    cada 20 asientos del avión, más 1 piloto y 1 copiloto, calcular la 
+%    cantidad de personas que componen la tripulación completa (piloto mas 
+%    copiloto/s mas auxiliares de abordo) para un determinado vuelo.
+
+tripulacion(N, Piloto, Copilotos, Azafatas) :-
+	duracion_vuelo(N, Duracion),
+	vuelo(_, N, _, _, _, _, _, _, IdAvion, _),
+	avion(IdAvion, _, _, _, Turista, Business),
+	(Duracion > 8 ->
+		Azafatas is round((Turista + Business) / 25),
+		Copilotos is 2
+	;	Azafatas is round((Turista + Business) / 20),
+		Copilotos is 1
+	),
+	Piloto is 1.
+
+% =============================================================================
+
+% 8. Calcular la ganancia que obtiene la empresa si logra vender un porcentaje 
+%    determinado de pasajes en clase turista y otro porcentaje de pasajes en 
+%    clase business para un vuelo específico.
+%
+% ¿La ganacia se genera solo sobre los cargos de la empresa?
+% turista internacional 35%
+% turista nacional 5%
+% bussines 120% sobre turista
+
+/* ganancia(N, T, B, TuristaVendidos, BussinesVendidos) :- 
+	vuelo(_, N, _, _, _, _, _, _, IdAvion, _),
+	avion(IdAvion, _, _, _, Turista, Bussines),
+	integer(Turista),
+	integer(Bussines),
+	TuristaVendidos is ((Turista * T) / 100),
+	BussinesVendidos is ((Bussines * B) / 100).
+ */
+
+ganancia(N, T, B, Ganancia) :-
+	vuelo(_, N, IdOrigen, IdDestino, _, IdValor, _, _, IdAvion, _),
+	avion(IdAvion, _, _, _, Turista, Bussines),
+	integer(Turista),
+	integer(Bussines),
+	TuristaVendidos is (Turista * T) / 100,
+	BussinesVendidos is (Bussines * B) / 100,
+	valor(IdValor, _Precio, _),
+	ciudad(IdOrigen, _, PaisOrigen),
+	ciudad(IdDestino, _, PaisDestino),
+	(PaisOrigen = PaisDestino ->
+		precio_turista('Nacional', _, __Cargo),
+		PrecioTurista is _Precio * (1 + __Cargo)
+	;	precio_turista('Internacional', _, __Cargo),
+		PrecioTurista is _Precio * (1 + __Cargo)
+	),
+	precio_bussines(__CargoBussines),
+	PrecioBussines is PrecioTurista * __CargoBussines,
+	Ganancia is TuristaVendidos * PrecioTurista + BussinesVendidos * PrecioBussines.
