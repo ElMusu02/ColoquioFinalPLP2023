@@ -106,6 +106,7 @@ precio_bussines(1.2).
 tripulacion_vuelo_largo(2, 25).
 tripulacion_vuelo_corto(1, 20).
 
+
 % =============================================================================
 
 % 1. Informar las ciudades destino de una determinada ciudad origen
@@ -268,10 +269,33 @@ rutas_avion(A, Origen, Destino) :-
 %  ?- vuelos_dia('LU', IdVuelo).
 %  
 %  ==
-vuelos_dia(D, IdVuelo) :-
-	vuelo(IdVuelo, _, _, _, Frecuencia, _, _, _, _, _),
-	member(D, Frecuencia).
-	%append(H, HorarioSalida),
+
+
+% Compara 2 vuelos basados en su horario de salida
+comparar_vuelos(Resultado, IdVuelo1, IdVuelo2) :-
+    vuelo(IdVuelo1, _, _, _, _, _, HoraSalida1, _, _, _),
+    vuelo(IdVuelo2, _, _, _, _, _, HoraSalida2, _, _, _),
+    compare(Resultado, HoraSalida1, HoraSalida2),
+    (Resultado = '=' -> IdVuelo1 @<IdVuelo2;true).
+
+% Ordenar los vuelos basados en su horario de salida
+ordenar_vuelos_por_hora_salida :-
+    findall(IdVuelo, vuelo(IdVuelo, _, _, _, _, _, _, _, _, _), VuelosSinOrdenar),
+    predsort(comparar_vuelos, VuelosSinOrdenar, VuelosOrdenados),
+    mostrar_vuelos_ordenados(VuelosOrdenados).
+
+% Muestra los vuelos
+mostrar_vuelos_ordenados([]).
+mostrar_vuelos_ordenados([IdVuelo|Resto]) :-
+    vuelo(IdVuelo, NumVuelo, IdOrigen, IdDestino, Frecuencia, IdValor, HoraSalida, HoraLlegada, IdAvion, Diferencia),
+    format('Vuelo ~d: ~w, Desde: ~d, A: ~d, Frecuencia: ~w, IdValor: ~d, Hora Salida: ~w, Hora Llegada: ~w, IdAvion: ~d, Dif: ~d~n',
+           [IdVuelo, NumVuelo, IdOrigen, IdDestino, Frecuencia, IdValor, HoraSalida, HoraLlegada, IdAvion, Diferencia]),
+    mostrar_vuelos_ordenados(Resto).
+
+vuelos_dia(D) :-
+	vuelo(_, _, _, _, Frecuencia, _, _, _, _, _),
+	member(D, Frecuencia),
+	ordenar_vuelos_por_hora_salida.
 
 % =============================================================================
 
@@ -281,9 +305,28 @@ vuelos_dia(D, IdVuelo) :-
 
 :- use_module(library(date_time)).
 
-%duracion_vuelo(N, Duracion) :-
-%	vuelo(_, N, _, _, _, _, Salida, Llegada, _, Diferecia),
-%	HorarioLlegada is Llegada * 
+% C es un string horario
+horas_minutos(C, Hora, Minutos) :-
+	split_string(C, ':', "", HorarioLista),
+	nth0(0, DifereciaLista, HoraCadena),
+	nth1(1, DifereciaLista, MinutosCadena),
+	number_string(Hora, HoraCadena), 
+	number_string(Minutos, MinutosCadena).
+
+duracion_vuelo(N, DuracionMinutos) :-
+	vuelo(_, N, _, _, _, _, Salida, Llegada, _, Diferecia),
+	horas_minutos(Salida, HoraSalida, MinutosSalida),
+	horas_minutos(Llegada, HoraLlegada, MinutosLlegada),
+	(time_compare(time(HoraSalida, MinutosSalida, 00), <, time(HoraLlegada, MinutosLlegada, 00)) ->
+		datetime_difference((datetime(2000, 06, 01, HoraLlegada, MinutosLlegada, 00), (datetime(2000, 06, 01, HoraSalida, MinutosSalida, 00), DifereciaLista)))
+	;
+		datetime_difference((datetime(2000, 06, 02, HoraSalida, MinutosSalida, 00), (datetime(2000, 06, 01, HoraLlegada, MinutosLlegada, 00), DifereciaLista)))
+	),
+	nth2(2, DifereciaLista, Dia),
+	nth3(3, DifereciaLista, Horas),
+	nth4(4, DifereciaLista, Minutos),
+	DuracionMinutos is ((Dia * 24) * 60)  + (Horas * 60) + Minutos.
+
 
 % =============================================================================
 
@@ -397,3 +440,34 @@ ganancia(N, T, B, Ganancia) :-
 	precio_bussines(__CargoBussines),
 	GananciaBussines is PrecioTurista * (1 + __CargoBussines),
 	Ganancia is TuristaVendidos * GananciaTurista + BussinesVendidos * GananciaBussines.
+
+% =============================================================================
+
+% 9. Calcular la distancia recorrida por un avión que realiza un vuelo 
+%    triangular, es decir, primero realiza la ruta de la ciudad A a la ciudad 
+%    B, luego la ruta de la ciudad B a la ciudad C y finalmente la ruta de la 
+%    ciudad C a la ciudad A. Un vuelo triangular se identifica con números de 
+%    vuelos correlativos. 
+
+sumar_uno_numero_vuelo(V, NumeroVuelo) :-
+	sub_string(V, 2, 4, _, CadenaNum),
+	number_string(Num, CadenaNum), 
+	Numero is Num + 1,
+	number_string(Numero, Sufijo),
+	sub_string(V, 0, 2, _, Prefijo),
+	string_concat(Prefijo, Sufijo, NumeroVuelo).
+
+
+distancia_triangular(A, Distancia) :-
+	vuelo(_, NumeroVuelo1, _, _, _, IdValor1, _, _, _, A),
+	sumar_uno_numero_vuelo(NumeroVuelo1, NumeroVuelo2),
+	vuelo(_, NumeroVuelo2, _, _, _, IdValor2, _, _, _, IdAvion2),
+	A = IdAvion2,
+	sumar_numero_vuelo(NumeroVuelo2, NumeroVuelo3),
+	vuelo(_, NumeroVuelo3, _, _, _, IdValor3, _, _, _, IdAvion3),
+	A = IdAvion3,
+	IdOrigen = IdDestino,
+	valor(idValor1, _, Distancia1),
+	valor(idValor2, _, Distancia2),
+	valor(idValor3, _, Distancia3),
+	Distancia is Distancia1 + Distancia2 + Distancia3.
