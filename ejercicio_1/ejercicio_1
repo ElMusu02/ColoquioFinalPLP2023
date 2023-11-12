@@ -1,0 +1,3 @@
+alumno := Alumno new.
+alumno setDni:123. 
+alumno getDni.
