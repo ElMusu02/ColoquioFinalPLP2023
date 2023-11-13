@@ -1,3 +1,20 @@
 alumno := Alumno new.
-alumno setDni:123. 
-alumno getDni.
+cursada := Cursada new.
+
+dni := Dialog request: ' Ingrese su dni' initialAnswer: ' ' .
+alumno setDni: dni.
+
+materia := Dialog request: ' Ingrese el nombre de la materia' initialAnswer: ' '.
+cursada setMateria: materia.
+
+| anio |
+[
+anio := (Dialog request: ' Ingrese el año de cursado de la materia (valor entre 2009 y 2024)' initialAnswer: ' ' ) asNumber.
+(anio isNil or: [anio between: 2009 and: 2024] )] whileFalse: [ 
+            Dialog warn: ' Año erroneo. Ingrese el año de cursado de la materia (valor entre 2009 y 2024)'.
+       ].
+
+cursada setAño: anio.
+cursada getAño.
+
+
