@@ -19,19 +19,19 @@ valor(14, 30, 197). % Santiago - Mendoza
 
 % Hechos que almacenan las ciudades 
 % ciudad(id, nombre, pais)
-ciudad(1, 'Buenos Aires', 'Argentina').
-ciudad(2, 'Madrid', 'España').
-ciudad(3, 'Montevideo', 'Uruguay').
-ciudad(4, 'Cordoba', 'Argentina').
-ciudad(5, 'Punta Cana', 'Republica Dominicana').
-ciudad(6, 'Miami', 'Estados Unidos').
-ciudad(7, 'New York', 'Estados Unidos').
-ciudad(8, 'Ushuaia', 'Argentina').
-ciudad(9, 'Sao Paulo', 'Brasil').
-ciudad(10, 'Lima', 'Peru').
-ciudad(11, 'Santiago', 'Chile').
-ciudad(12, 'Mendoza', 'Argentina').
-ciudad(13, 'Roma', 'Italia').
+ciudad(1, "Buenos Aires", "Argentina").
+ciudad(2, "Madrid", "España").
+ciudad(3, "Montevideo", "Uruguay").
+ciudad(4, "Cordoba", "Argentina").
+ciudad(5, "Punta Cana", "Republica Dominicana").
+ciudad(6, "Miami", "Estados Unidos").
+ciudad(7, "New York", "Estados Unidos").
+ciudad(8, "Ushuaia", "Argentina").
+ciudad(9, "Sao Paulo", "Brasil").
+ciudad(10, "Lima", "Peru").
+ciudad(11, "Santiago", "Chile").
+ciudad(12, "Mendoza", "Argentina").
+ciudad(13, "Roma", "Italia").
 
 
 % Hechos que almacenan los vuelos
@@ -47,30 +47,30 @@ ciudad(13, 'Roma', 'Italia').
 % 8: horario_llegada
 % 9: id_avion
 % 10: diferencia_horaria
-vuelo(1, 'AR1140', 1, 13, ['LU', 'MA', 'MI', 'JU', 'VI'], 1, '22:40', '16:00', 4, -4).
-vuelo(2, 'AR1141', 13, 1, ['MA', 'MI', 'JU', 'VI', 'SA'], 1, '18:15', '04:40', 4, 4).
-vuelo(3, 'AR1132', 1, 2, ['LU', 'MA', 'MI', 'JU', 'VI', 'SA', 'DO'], 3, '23:55', '04:40', 4, -4).
-vuelo(4, 'AR1133', 2, 1, ['LU', 'MA', 'MI', 'JU', 'VI', 'SA', 'DO'], 3, '19:00', '04:05', 4, 4).
-vuelo(5, 'AR1386', 1, 3, ['LU', 'MA', 'MI', 'JU', 'VI', 'SA', 'DO'], 7, '08:00', '08:45', 1, 0).
-vuelo(6, 'AR1387', 3, 1, ['LU', 'MA', 'MI', 'JU', 'VI', 'SA', 'DO'], 7, '09:15', '10:00', 1, 0).
-vuelo(7, 'AR1134', 1, 2, ['MA', 'JU', 'SA'], 3, '13:40', '05:55', 4, -4).
-vuelo(8, 'AR1135', 2, 4, ['MI', 'VI', 'DO'], 13, '08:30', '17:35', 4, 4).
-vuelo(9, 'AR1136', 4, 1, ['MI', 'VI', 'DO'], 4, '19:00', '20:15', 4, 0).
-vuelo(10, 'AR1324', 1, 5, ['LU', 'MA', 'VI', 'SA'], 9, '02:25', '09:40', 8, 1).
-vuelo(11, 'AR1325', 5, 1, ['LU', 'MA', 'VI', 'SA'], 9, '11:10', '19:55', 8, -1).
-vuelo(12, 'AR1302', 1, 6, ['LU', 'MA', 'MI', 'JU', 'VI', 'SA', 'DO'], 6, '22:55', '06:05', 7, 1).
-vuelo(13, 'AR1303', 6, 1, ['LU', 'MA', 'MI', 'JU', 'VI', 'SA', 'DO'], 6, '17:15', '04:10', 6, -1).
-vuelo(14, 'AR1300', 1, 7, ['LU', 'MA', 'MI', 'JU', 'VI', 'SA', 'DO'], 8, '23:55', '09:00', 6, 1).
-vuelo(15, 'AR1301', 7, 1, ['LU', 'MA', 'MI', 'JU', 'VI', 'SA', 'DO'], 8, '15:35', '04:35', 6, -1).
-vuelo(16, 'AR1880', 1, 8, ['LU', 'MA', 'MI', 'JU', 'VI', 'SA', 'DO'], 12, '15:50', '19:25', 5, 0).
-vuelo(17, 'AR1881', 8, 1, ['LU', 'MA', 'MI', 'JU', 'VI', 'SA', 'DO'], 12, '21:00', '00:25', 5, 0).
-vuelo(18, 'AR1238', 1, 9, ['LU', 'MA', 'MI', 'JU', 'VI', 'SA', 'DO'], 11, '16:15', '18:55', 2, 1).
-vuelo(19, 'AR1239', 9, 1, ['LU', 'MA', 'MI', 'JU', 'VI', 'SA', 'DO'], 11, '19:50', '22:45', 2, -1).
-vuelo(20, 'AR1364', 1, 10, ['LU', 'MA', 'MI', 'JU', 'VI', 'SA', 'DO'], 2, '18:50', '21:35', 3, 2).
-vuelo(21, 'AR1365', 10, 1, ['LU', 'MA', 'MI', 'JU', 'VI', 'SA', 'DO'], 2, '22:50', '05:05', 3, -2).
-vuelo(22, 'AR1284', 1, 11, ['LU', 'MA', 'MI', 'JU', 'VI', 'SA', 'DO'], 10, '11:10', '13:30', 1, 0).
-vuelo(23, 'AR1285', 11, 12, ['LU', 'MA', 'MI', 'JU', 'VI', 'SA', 'DO'], 10, '14:30', '15:25', 1, 0).
-vuelo(24, 'AR1286', 12, 1, ['LU', 'MA', 'MI', 'JU', 'VI', 'SA', 'DO'], 5, '16:00', '17:35', 1, 0).
+vuelo(1, "AR1140", 1, 13, ["LU", "MA", "MI", "JU", "VI"], 1, "22:40", "16:00", 4, -4).
+vuelo(2, "AR1141", 13, 1, ["MA", "MI", "JU", "VI", "SA"], 1, "18:15", "04:40", 4, 4).
+vuelo(3, "AR1132", 1, 2, ["LU", "MA", "MI", "JU", "VI", "SA", "DO"], 3, "23:55", "04:40", 4, -4).
+vuelo(4, "AR1133", 2, 1, ["LU", "MA", "MI", "JU", "VI", "SA", "DO"], 3, "19:00", "04:05", 4, 4).
+vuelo(5, "AR1386", 1, 3, ["LU", "MA", "MI", "JU", "VI", "SA", "DO"], 7, "08:00", "08:45", 1, 0).
+vuelo(6, "AR1387", 3, 1, ["LU", "MA", "MI", "JU", "VI", "SA", "DO"], 7, "09:15", "10:00", 1, 0).
+vuelo(7, "AR1134", 1, 2, ["MA", "JU", "SA"], 3, "13:40", "05:55", 4, -4).
+vuelo(8, "AR1135", 2, 4, ["MI", "VI", "DO"], 13, "08:30", "17:35", 4, 4).
+vuelo(9, "AR1136", 4, 1, ["MI", "VI", "DO"], 4, "19:00", "20:15", 4, 0).
+vuelo(10, "AR1324", 1, 5, ["LU", "MA", "VI", "SA"], 9, "02:25", "09:40", 8, 1).
+vuelo(11, "AR1325", 5, 1, ["LU", "MA", "VI", "SA"], 9, "11:10", "19:55", 8, -1).
+vuelo(12, "AR1302", 1, 6, ["LU", "MA", "MI", "JU", "VI", "SA", "DO"], 6, "22:55", "06:05", 7, 1).
+vuelo(13, "AR1303", 6, 1, ["LU", "MA", "MI", "JU", "VI", "SA", "DO"], 6, "17:15", "04:10", 6, -1).
+vuelo(14, "AR1300", 1, 7, ["LU", "MA", "MI", "JU", "VI", "SA", "DO"], 8, "23:55", "09:00", 6, 1).
+vuelo(15, "AR1301", 7, 1, ["LU", "MA", "MI", "JU", "VI", "SA", "DO"], 8, "15:35", "04:35", 6, -1).
+vuelo(16, "AR1880", 1, 8, ["LU", "MA", "MI", "JU", "VI", "SA", "DO"], 12, "15:50", "19:25", 5, 0).
+vuelo(17, "AR1881", 8, 1, ["LU", "MA", "MI", "JU", "VI", "SA", "DO"], 12, "21:00", "00:25", 5, 0).
+vuelo(18, "AR1238", 1, 9, ["LU", "MA", "MI", "JU", "VI", "SA", "DO"], 11, "16:15", "18:55", 2, 1).
+vuelo(19, "AR1239", 9, 1, ["LU", "MA", "MI", "JU", "VI", "SA", "DO"], 11, "19:50", "22:45", 2, -1).
+vuelo(20, "AR1364", 1, 10, ["LU", "MA", "MI", "JU", "VI", "SA", "DO"], 2, "18:50", "21:35", 3, 2).
+vuelo(21, "AR1365", 10, 1, ["LU", "MA", "MI", "JU", "VI", "SA", "DO"], 2, "22:50", "05:05", 3, -2).
+vuelo(22, "AR1284", 1, 11, ["LU", "MA", "MI", "JU", "VI", "SA", "DO"], 10, "11:10", "13:30", 1, 0).
+vuelo(23, "AR1285", 11, 12, ["LU", "MA", "MI", "JU", "VI", "SA", "DO"], 14, "14:30", "15:25", 1, 0).
+vuelo(24, "AR1286", 12, 1, ["LU", "MA", "MI", "JU", "VI", "SA", "DO"], 5, "16:00", "17:35", 1, 0).
 
 
 % Hechos que almacenan los aviones
@@ -82,14 +82,14 @@ vuelo(24, 'AR1286', 12, 1, ['LU', 'MA', 'MI', 'JU', 'VI', 'SA', 'DO'], 5, '16:00
 % 4: rango_alcance
 % 5: asientos_turista
 % 6: asientos_bussines
-avion(1, 'Boeing', '737-700', 5000, 120, 8).
-avion(2, 'Boeing', '737-800', 4500, 162, 8).
-avion(3, 'Boeing', '737 MAX 8', 5000, 162, 8).
-avion(4, 'Airbus', 'A330-200', 12000, 243, 22).
-avion(5, 'Airbus', 'A330-200', 10000, 299, 0).
-avion(6, 'Airbus', 'A330-200', 12000, 248, 24).
-avion(7, 'Airbus', 'A330-200', 10000, 244, 25).
-avion(8, 'Airbus', 'A330-200', 10000, 186, 36).
+avion(1, "Boeing", "737-700", 5000, 120, 8).
+avion(2, "Boeing", "737-800", 4500, 162, 8).
+avion(3, "Boeing", "737 MAX 8", 5000, 162, 8).
+avion(4, "Airbus", "A330-200", 12000, 243, 22).
+avion(5, "Airbus", "A330-200", 10000, 299, 0).
+avion(6, "Airbus", "A330-200", 12000, 248, 24).
+avion(7, "Airbus", "A330-200", 10000, 244, 25).
+avion(8, "Airbus", "A330-200", 10000, 186, 36).
 
 
 % Hechos que almacenan los porcentajes sobre la base de los precios de asientos,
@@ -117,19 +117,19 @@ tripulacion_vuelo_corto(1, 20).
 %
 %  Por ejemplo,
 %  ==
-%  ?- ciudades_destino('Buenos Aires', Destino).
-%  Destino = 'Roma' ;
-%  Destino = 'Madrid' ;
-%  Destino = 'Montevideo' ;
-%  Destino = 'Madrid' ;
-%  Destino = 'Punta Cana' ;
-%  Destino = 'Miami' ;
-%  Destino = 'New York' ;
-%  Destino = 'Ushuaia' ;
-%  Destino = 'Ushuaia' ;
-%  Destino = 'Sao Paulo' ;
-%  Destino = 'Lima' ;
-%  Destino = 'Santiago'.
+%  ?- ciudades_destino("Buenos Aires", Destino).
+%  Destino = "Roma" ;
+%  Destino = "Madrid" ;
+%  Destino = "Montevideo" ;
+%  Destino = "Madrid" ;
+%  Destino = "Punta Cana" ;
+%  Destino = "Miami" ;
+%  Destino = "New York" ;
+%  Destino = "Ushuaia" ;
+%  Destino = "Ushuaia" ;
+%  Destino = "Sao Paulo" ;
+%  Destino = "Lima" ;
+%  Destino = "Santiago".
 %  ==
 ciudades_destino(O, Destino) :- 
 	ciudad(IdOrigen, O, _),
@@ -149,50 +149,50 @@ ciudades_destino(O, Destino) :-
 %
 %  Por ejemplo,
 %  ==
-%  ?- rutas_modelo_o_fabricante(_, 'Boeing', Origen, Destino, IdAvion).
-%  Origen = 'Buenos Aires',
-%  Destino = 'Montevideo',
+%  ?- rutas_modelo_o_fabricante(_, "Boeing", Origen, Destino, IdAvion).
+%  Origen = "Buenos Aires",
+%  Destino = "Montevideo",
 %  IdAvion = 1 ;
-%  Origen = 'Montevideo',
-%  Destino = 'Buenos Aires',
+%  Origen = "Montevideo",
+%  Destino = "Buenos Aires",
 %  IdAvion = 1 ;
-%  Origen = 'Buenos Aires',
-%  Destino = 'Santiago',
+%  Origen = "Buenos Aires",
+%  Destino = "Santiago",
 %  IdAvion = 1 ;
-%  Origen = 'Santiago',
-%  Destino = 'Mendoza',
+%  Origen = "Santiago",
+%  Destino = "Mendoza",
 %  IdAvion = 1 ;
-%  Origen = 'Mendoza',
-%  Destino = 'Buenos Aires',
+%  Origen = "Mendoza",
+%  Destino = "Buenos Aires",
 %  IdAvion = 1 ;
-%  Origen = 'Buenos Aires',
-%  Destino = 'Sao Paulo',
+%  Origen = "Buenos Aires",
+%  Destino = "Sao Paulo",
 %  IdAvion = 2 ;
-%  Origen = 'Sao Paulo',
-%  Destino = 'Buenos Aires',
+%  Origen = "Sao Paulo",
+%  Destino = "Buenos Aires",
 %  IdAvion = 2 ;
-%  Origen = 'Buenos Aires',
-%  Destino = 'Lima',
+%  Origen = "Buenos Aires",
+%  Destino = "Lima",
 %  IdAvion = 3 ;
-%  Origen = 'Lima',
-%  Destino = 'Buenos Aires',
+%  Origen = "Lima",
+%  Destino = "Buenos Aires",
 %  IdAvion = 3 ;
 %
-%  ?- rutas_modelo_o_fabricante('737-700', _, Origen, Destino, IdAvion).
-%  Origen = 'Buenos Aires',
-%  Destino = 'Montevideo',
+%  ?- rutas_modelo_o_fabricante("737-700", _, Origen, Destino, IdAvion).
+%  Origen = "Buenos Aires",
+%  Destino = "Montevideo",
 %  IdAvion = 1 ;
-%  Origen = 'Montevideo',
-%  Destino = 'Buenos Aires',
+%  Origen = "Montevideo",
+%  Destino = "Buenos Aires",
 %  IdAvion = 1 ;
-%  Origen = 'Buenos Aires',
-%  Destino = 'Santiago',
+%  Origen = "Buenos Aires",
+%  Destino = "Santiago",
 %  IdAvion = 1 ;
-%  Origen = 'Santiago',
-%  Destino = 'Mendoza',
+%  Origen = "Santiago",
+%  Destino = "Mendoza",
 %  IdAvion = 1 ;
-%  Origen = 'Mendoza',
-%  Destino = 'Buenos Aires',
+%  Origen = "Mendoza",
+%  Destino = "Buenos Aires",
 %  IdAvion = 1.
 %  ==
 rutas_modelo_o_fabricante(M, F, Origen, Destino, IdAvion) :-
@@ -215,30 +215,30 @@ rutas_modelo_o_fabricante(M, F, Origen, Destino, IdAvion) :-
 %  Por ejemplo,
 %  ==
 %  ?- rutas_avion(2, Origen, Destino).
-%  Origen = 'Buenos Aires',
-%  Destino = 'Lima' ;
-%  Origen = 'Lima',
-%  Destino = 'Buenos Aires' ;
-%  Origen = 'Cordoba',
-%  Destino = 'Buenos Aires' ;
-%  Origen = 'Mendoza',
-%  Destino = 'Buenos Aires' ;
-%  Origen = 'Buenos Aires',
-%  Destino = 'Montevideo' ;
-%  Origen = 'Montevideo',
-%  Destino = 'Buenos Aires' ;
-%  Origen = 'Buenos Aires',
-%  Destino = 'Santiago' ;
-%  Origen = 'Santiago',
-%  Destino = 'Mendoza' ;
-%  Origen = 'Buenos Aires',
-%  Destino = 'Sao Paulo' ;
-%  Origen = 'Sao Paulo',
-%  Destino = 'Buenos Aires' ;
-%  Origen = 'Buenos Aires',
-%  Destino = 'Ushuaia' ;
-%  Origen = 'Buenos Aires',
-%  Destino = 'Ushuaia' ;
+%  Origen = "Buenos Aires",
+%  Destino = "Lima" ;
+%  Origen = "Lima",
+%  Destino = "Buenos Aires" ;
+%  Origen = "Cordoba",
+%  Destino = "Buenos Aires" ;
+%  Origen = "Mendoza",
+%  Destino = "Buenos Aires" ;
+%  Origen = "Buenos Aires",
+%  Destino = "Montevideo" ;
+%  Origen = "Montevideo",
+%  Destino = "Buenos Aires" ;
+%  Origen = "Buenos Aires",
+%  Destino = "Santiago" ;
+%  Origen = "Santiago",
+%  Destino = "Mendoza" ;
+%  Origen = "Buenos Aires",
+%  Destino = "Sao Paulo" ;
+%  Origen = "Sao Paulo",
+%  Destino = "Buenos Aires" ;
+%  Origen = "Buenos Aires",
+%  Destino = "Ushuaia" ;
+%  Origen = "Buenos Aires",
+%  Destino = "Ushuaia" ;
 %  ==
 rutas_avion(A, Origen, Destino) :-
 	valor(IdValor, _, Distancia),
@@ -261,12 +261,12 @@ rutas_avion(A, Origen, Destino) :-
 
 %% vuelos_dia(+D, -IdVuelo)
 %
-%  Busca los vuelos dado un dia D, que puede ser 'LU', 'MA', 'MI', 'JU', 
-%  'VI', 'SA' o 'DO'. Los vuelos estan ordenados por horario de salida.
+%  Busca los vuelos dado un dia D, que puede ser "LU", "MA", "MI", "JU", 
+%  "VI", "SA" o "DO". Los vuelos estan ordenados por horario de salida.
 %
 %  Por ejemplo,
 %  ==
-%  ?- vuelos_dia('LU', IdVuelo).
+%  ?- vuelos_dia("LU", IdVuelo).
 %  
 %  ==
 
@@ -276,7 +276,7 @@ comparar_vuelos(Resultado, IdVuelo1, IdVuelo2) :-
     vuelo(IdVuelo1, _, _, _, _, _, HoraSalida1, _, _, _),
     vuelo(IdVuelo2, _, _, _, _, _, HoraSalida2, _, _, _),
     compare(Resultado, HoraSalida1, HoraSalida2),
-    (Resultado = '=' -> IdVuelo1 @<IdVuelo2;true).
+    (Resultado = "=" -> IdVuelo1 @<IdVuelo2;true).
 
 % Ordenar los vuelos basados en su horario de salida
 ordenar_vuelos_por_hora_salida :-
@@ -288,7 +288,7 @@ ordenar_vuelos_por_hora_salida :-
 mostrar_vuelos_ordenados([]).
 mostrar_vuelos_ordenados([IdVuelo|Resto]) :-
     vuelo(IdVuelo, NumVuelo, IdOrigen, IdDestino, Frecuencia, IdValor, HoraSalida, HoraLlegada, IdAvion, Diferencia),
-    format('Vuelo ~d: ~w, Desde: ~d, A: ~d, Frecuencia: ~w, IdValor: ~d, Hora Salida: ~w, Hora Llegada: ~w, IdAvion: ~d, Dif: ~d~n',
+    format("Vuelo ~d: ~w, Desde: ~d, A: ~d, Frecuencia: ~w, IdValor: ~d, Hora Salida: ~w, Hora Llegada: ~w, IdAvion: ~d, Dif: ~d~n",
            [IdVuelo, NumVuelo, IdOrigen, IdDestino, Frecuencia, IdValor, HoraSalida, HoraLlegada, IdAvion, Diferencia]),
     mostrar_vuelos_ordenados(Resto).
 
@@ -307,7 +307,7 @@ vuelos_dia(D) :-
 
 % C es un string horario
 horas_minutos(C, Hora, Minutos) :-
-	split_string(C, ':', "", HorarioLista),
+	split_string(C, ":", "", HorarioLista),
 	nth0(0, DifereciaLista, HoraCadena),
 	nth1(1, DifereciaLista, MinutosCadena),
 	number_string(Hora, HoraCadena), 
@@ -353,7 +353,7 @@ duracion_vuelo(N, DuracionMinutos) :-
 %
 %  Por ejemplo,
 %  ==
-%  ?- precio('AR1140', PrecioTurista, PrecioBussines).
+%  ?- precio("AR1140", PrecioTurista, PrecioBussines).
 %  Ingrese la cotizacion oficial del dolar: 
 %  |: 100.
 %
@@ -365,7 +365,7 @@ precio(N, PrecioTurista, PrecioBussines) :-
 	valor(IdValor, _Precio, _),
 	ciudad(IdOrigen, _, PaisOrigen),
 	ciudad(IdDestino, _, PaisDestino),
-	writeln('Ingrese la cotizacion oficial del dolar: '),
+	writeln("Ingrese la cotizacion oficial del dolar: "),
 	read(_Cotizacion),
 	(PaisOrigen = PaisDestino ->
 		precio_turista_nacional(__Impuesto, __Cargo)
@@ -418,7 +418,7 @@ tripulacion(N, Piloto, Copilotos, Azafatas) :-
 %
 %  Por ejemplo,
 %  ==
-%  ?- ganancia('AR1386', 50, 50, Ganancia).
+%  ?- ganancia("AR1386", 50, 50, Ganancia).
 %  Ganancia = 9816.0.
 %  ==
 ganancia(N, T, B, Ganancia) :-
@@ -458,16 +458,42 @@ sumar_uno_numero_vuelo(V, NumeroVuelo) :-
 	string_concat(Prefijo, Sufijo, NumeroVuelo).
 
 
-distancia_triangular(A, Distancia) :-
-	vuelo(_, NumeroVuelo1, _, _, _, IdValor1, _, _, _, A),
+distancia_avion_triangular(A, Distancia) :-
+	vuelo(_, NumeroVuelo1, IdOrigen, _, _, IdValor1, _, _, A, _),
 	sumar_uno_numero_vuelo(NumeroVuelo1, NumeroVuelo2),
-	vuelo(_, NumeroVuelo2, _, _, _, IdValor2, _, _, _, IdAvion2),
-	A = IdAvion2,
-	sumar_numero_vuelo(NumeroVuelo2, NumeroVuelo3),
-	vuelo(_, NumeroVuelo3, _, _, _, IdValor3, _, _, _, IdAvion3),
-	A = IdAvion3,
+	vuelo(_, NumeroVuelo2, _, _, _, IdValor2, _, _, IdAvion2, _),
+	IdAvion1 = IdAvion2,
+	sumar_uno_numero_vuelo(NumeroVuelo2, NumeroVuelo3),
+	vuelo(_, NumeroVuelo3, _, IdDestino, _, IdValor3, _, _, IdAvion3, _),
+	IdAvion2 = IdAvion3,
 	IdOrigen = IdDestino,
-	valor(idValor1, _, Distancia1),
-	valor(idValor2, _, Distancia2),
-	valor(idValor3, _, Distancia3),
+	valor(IdValor1, _, Distancia1),
+	valor(IdValor2, _, Distancia2),
+	valor(IdValor3, _, Distancia3),
 	Distancia is Distancia1 + Distancia2 + Distancia3.
+
+distancia_vuelo_triangular(N, Distancia) :-
+	vuelo(_, N, IdOrigen, _, _, IdValor1, _, _, IdAvion1, _),
+	sumar_uno_numero_vuelo(N, NumeroVuelo2),
+	vuelo(_, NumeroVuelo2, _, _, _, IdValor2, _, _, IdAvion2, _),
+	IdAvion1 = IdAvion2,
+	sumar_uno_numero_vuelo(NumeroVuelo2, NumeroVuelo3),
+	vuelo(_, NumeroVuelo3, _, IdDestino, _, IdValor3, _, _, IdAvion3, _),
+	IdAvion2 = IdAvion3,
+	IdOrigen = IdDestino,
+	valor(IdValor1, _, Distancia1),
+	valor(IdValor2, _, Distancia2),
+	valor(IdValor3, _, Distancia3),
+	Distancia is Distancia1 + Distancia2 + Distancia3.
+
+
+% =============================================================================
+
+% 10. Calcular el tiempo total que demanda la realización de un vuelo 
+%     triangular. Un vuelo triangular es aquel que primero realiza la ruta de 
+%     la ciudad A a la ciudad B, luego la ruta de la ciudad B a la ciudad C y 
+%     finalmente la ruta de la ciudad C a la ciudad A. Un vuelo triangular se 
+%     identifica con números de vuelos correlativos. El tiempo tal incluye el 
+%     tiempo de vuelo de cada tramo más los tiempos que el avión permanece en 
+%     una escala o ciudad.
+
