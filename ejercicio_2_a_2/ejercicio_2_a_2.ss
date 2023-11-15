@@ -1,5 +1,5 @@
-; 2)a.2. Determine e informe al usuario la cantidad de elementos pares, impares y
-; nulos.
+; 2)a.2. Determine e informe al usuario la cantidad de elementos pares, impares 
+;        y nulos.
 
 (require srfi/1)
 
