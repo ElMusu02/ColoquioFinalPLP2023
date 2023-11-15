@@ -107,6 +107,16 @@ distancia('Buenos Aires', 'San Salvador', 5860).
 distancia('Buenos Aires', 'Washington D. C.', 8527).
 
 
-distancia_buenos_aires(Pais, C, D) :-
-	pais(Pais, 'America', C),
-	distancia('Buenos Aires', C, D).
+% Distancia: recibe como parámetro el nombre de un país del continente 
+% americano y devuelve el nombre de su capital y la distancia en kilometros 
+% entre Buenos Aires y la ciudad capital del país ingresado. 
+
+
+%% distancia_buenos_aires(+P, -Capital, -Distancia)
+%
+%  Dado un pais P calcula la distancia desde su capital hasta Buenos Aires,
+%  sus parametros de retorno son Capital y Distancia.
+%
+distancia_buenos_aires(P, Capital, Distancia) :-
+	pais(P, 'America', Capital),
+	distancia('Buenos Aires', Capital, Distancia).

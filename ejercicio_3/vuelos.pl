@@ -115,22 +115,6 @@ tripulacion_vuelo_corto(1, 20).
 %
 %  Busca las ciudades de destino dada una ciudad de origen O.
 %
-%  Por ejemplo,
-%  ==
-%  ?- ciudades_destino("Buenos Aires", Destino).
-%  Destino = "Roma" ;
-%  Destino = "Madrid" ;
-%  Destino = "Montevideo" ;
-%  Destino = "Madrid" ;
-%  Destino = "Punta Cana" ;
-%  Destino = "Miami" ;
-%  Destino = "New York" ;
-%  Destino = "Ushuaia" ;
-%  Destino = "Ushuaia" ;
-%  Destino = "Sao Paulo" ;
-%  Destino = "Lima" ;
-%  Destino = "Santiago".
-%  ==
 ciudades_destino(O, Destino) :- 
 	ciudad(IdOrigen, O, _),
 	vuelo(_, _, IdOrigen, IdDestino, _, _, _, _, _, _),
@@ -140,61 +124,11 @@ ciudades_destino(O, Destino) :-
 
 % 2. Informar las rutas que realiza un modelo determinado de avión o los 
 %    aviones de un fabricante específico. 
-%
-% ¿DETERMINAR MAS DATOS SOBRE EL AVION?
 
 %% rutas_modelo_o_fabricante(+M, +F, -Origen, -Destino, -IdAvion)
 %
 %  Busca las rutas que realiza un modelo de avion M, o un fabricante F.
 %
-%  Por ejemplo,
-%  ==
-%  ?- rutas_modelo_o_fabricante(_, "Boeing", Origen, Destino, IdAvion).
-%  Origen = "Buenos Aires",
-%  Destino = "Montevideo",
-%  IdAvion = 1 ;
-%  Origen = "Montevideo",
-%  Destino = "Buenos Aires",
-%  IdAvion = 1 ;
-%  Origen = "Buenos Aires",
-%  Destino = "Santiago",
-%  IdAvion = 1 ;
-%  Origen = "Santiago",
-%  Destino = "Mendoza",
-%  IdAvion = 1 ;
-%  Origen = "Mendoza",
-%  Destino = "Buenos Aires",
-%  IdAvion = 1 ;
-%  Origen = "Buenos Aires",
-%  Destino = "Sao Paulo",
-%  IdAvion = 2 ;
-%  Origen = "Sao Paulo",
-%  Destino = "Buenos Aires",
-%  IdAvion = 2 ;
-%  Origen = "Buenos Aires",
-%  Destino = "Lima",
-%  IdAvion = 3 ;
-%  Origen = "Lima",
-%  Destino = "Buenos Aires",
-%  IdAvion = 3 ;
-%
-%  ?- rutas_modelo_o_fabricante("737-700", _, Origen, Destino, IdAvion).
-%  Origen = "Buenos Aires",
-%  Destino = "Montevideo",
-%  IdAvion = 1 ;
-%  Origen = "Montevideo",
-%  Destino = "Buenos Aires",
-%  IdAvion = 1 ;
-%  Origen = "Buenos Aires",
-%  Destino = "Santiago",
-%  IdAvion = 1 ;
-%  Origen = "Santiago",
-%  Destino = "Mendoza",
-%  IdAvion = 1 ;
-%  Origen = "Mendoza",
-%  Destino = "Buenos Aires",
-%  IdAvion = 1.
-%  ==
 rutas_modelo_o_fabricante(M, F, Origen, Destino, IdAvion) :-
 	avion(IdAvion, _, M, _, _, _),
 	vuelo(_, _, IdOrigen, IdDestino, _, _, _, _, IdAvion, _),
@@ -212,34 +146,6 @@ rutas_modelo_o_fabricante(M, F, Origen, Destino, IdAvion) :-
 %  Busca las rutas que puede realizar un modelo de avion A, teniendo en cuenta 
 %  su rango de alcance y las distancia de las rutas.
 %
-%  Por ejemplo,
-%  ==
-%  ?- rutas_avion(2, Origen, Destino).
-%  Origen = "Buenos Aires",
-%  Destino = "Lima" ;
-%  Origen = "Lima",
-%  Destino = "Buenos Aires" ;
-%  Origen = "Cordoba",
-%  Destino = "Buenos Aires" ;
-%  Origen = "Mendoza",
-%  Destino = "Buenos Aires" ;
-%  Origen = "Buenos Aires",
-%  Destino = "Montevideo" ;
-%  Origen = "Montevideo",
-%  Destino = "Buenos Aires" ;
-%  Origen = "Buenos Aires",
-%  Destino = "Santiago" ;
-%  Origen = "Santiago",
-%  Destino = "Mendoza" ;
-%  Origen = "Buenos Aires",
-%  Destino = "Sao Paulo" ;
-%  Origen = "Sao Paulo",
-%  Destino = "Buenos Aires" ;
-%  Origen = "Buenos Aires",
-%  Destino = "Ushuaia" ;
-%  Origen = "Buenos Aires",
-%  Destino = "Ushuaia" ;
-%  ==
 rutas_avion(A, Origen, Destino) :-
 	valor(IdValor, _, Distancia),
 	avion(A, _, _, Rango, _, _),
@@ -254,22 +160,8 @@ rutas_avion(A, Origen, Destino) :-
 
 % 4. Informar los vuelos que se realizan un determinado día, ordenados por hora
 %    de salida. 
-%
-% FALTA ORDENAR POR HORA
 
 :- use_module(library(lists)).
-
-%% vuelos_dia(+D, -IdVuelo)
-%
-%  Busca los vuelos dado un dia D, que puede ser "LU", "MA", "MI", "JU", 
-%  "VI", "SA" o "DO". Los vuelos estan ordenados por horario de salida.
-%
-%  Por ejemplo,
-%  ==
-%  ?- vuelos_dia("LU", IdVuelo).
-%  
-%  ==
-
 
 % Compara 2 vuelos basados en su horario de salida
 comparar_vuelos(Resultado, IdVuelo1, IdVuelo2) :-
@@ -292,10 +184,16 @@ mostrar_vuelos_ordenados([IdVuelo|Resto]) :-
            [IdVuelo, NumVuelo, IdOrigen, IdDestino, Frecuencia, IdValor, HoraSalida, HoraLlegada, IdAvion, Diferencia]),
     mostrar_vuelos_ordenados(Resto).
 
+%% vuelos_dia(+D, -IdVuelo)
+%
+%  Busca los vuelos dado un dia D, que puede ser "LU", "MA", "MI", "JU", 
+%  "VI", "SA" o "DO". Los vuelos estan ordenados por horario de salida.
+%
 vuelos_dia(D) :-
 	vuelo(_, _, _, _, Frecuencia, _, _, _, _, _),
 	member(D, Frecuencia),
 	ordenar_vuelos_por_hora_salida.
+
 
 % =============================================================================
 
@@ -303,30 +201,38 @@ vuelos_dia(D) :-
 %    salida y llegada y las diferencias horarias que existen entre las ciudades 
 %    de origen y destino. 
 
-:- use_module(library(date_time)).
+convertir_total_minutos_a_hora(Minutos,HorasFi,MinutosFi):-
+	HorasFi is div(Minutos,60),
+	MinutosFi is mod(Minutos,60).
 
-% C es un string horario
-horas_minutos(C, Hora, Minutos) :-
-	split_string(C, ":", "", HorarioLista),
-	nth0(0, DifereciaLista, HoraCadena),
-	nth1(1, DifereciaLista, MinutosCadena),
-	number_string(Hora, HoraCadena), 
-	number_string(Minutos, MinutosCadena).
+convertir_hora_a_integer(HoraString,Horas,Minutos):-
+	split_string(HoraString,":","",[HorasStr,MinutosStr]),
+	number_string(Horas,HorasStr),
+	number_string(Minutos,MinutosStr).
 
-duracion_vuelo(N, DuracionMinutos) :-
-	vuelo(_, N, _, _, _, _, Salida, Llegada, _, Diferecia),
-	horas_minutos(Salida, HoraSalida, MinutosSalida),
-	horas_minutos(Llegada, HoraLlegada, MinutosLlegada),
-	(time_compare(time(HoraSalida, MinutosSalida, 00), <, time(HoraLlegada, MinutosLlegada, 00)) ->
-		datetime_difference((datetime(2000, 06, 01, HoraLlegada, MinutosLlegada, 00), (datetime(2000, 06, 01, HoraSalida, MinutosSalida, 00), DifereciaLista)))
-	;
-		datetime_difference((datetime(2000, 06, 02, HoraSalida, MinutosSalida, 00), (datetime(2000, 06, 01, HoraLlegada, MinutosLlegada, 00), DifereciaLista)))
-	),
-	nth2(2, DifereciaLista, Dia),
-	nth3(3, DifereciaLista, Horas),
-	nth4(4, DifereciaLista, Minutos),
-	DuracionMinutos is ((Dia * 24) * 60)  + (Horas * 60) + Minutos.
+diferencia_tiempo(HoraSalida,HoraLlegada,Difer):-
+	convertir_hora_a_integer(HoraSalida,HT1,MT1),
+	convertir_hora_a_integer(HoraLlegada,HT2,MT2),
+	TotalMinutos1 is HT1 * 60 + MT1,
+	TotalMinutos2 is HT2 * 60 + MT2,
+	%Esto en el caso que el horario de llegada es al otro dia, o sea pasada las 00:00 Hs
+	(TotalMinutos2 < TotalMinutos1 ->
+	   TotalMinutos2_modif is TotalMinutos2 + 24 * 60;
+	   TotalMinutos2_modif = TotalMinutos2),
+	Difer is TotalMinutos2_modif - TotalMinutos1.
 
+total_vuelo_duracion(HoraSalida,HoraLlegada,Duracion):-
+	diferencia_tiempo(HoraSalida,HoraLlegada,Duracion).
+
+duracion_vuelo_final(Vuelo) :-
+	vuelo(_, Vuelo, _,_, _, _, HoraSal, HoraLle, _, DifHor),
+	total_vuelo_duracion(HoraSal,HoraLle,Dur),
+	DifeCal is DifHor * 60,
+	DuracionFinal is Dur + DifeCal,
+	convertir_total_minutos_a_hora(DuracionFinal,HorasFin,MinutosFin),
+	write('La duracion del vuelo ingresado es de:'),
+	write(HorasFin),write(' horas y '),
+	write(MinutosFin), write(' minutos,').
 
 % =============================================================================
 
@@ -351,15 +257,6 @@ duracion_vuelo(N, DuracionMinutos) :-
 %  le solicita ingresar al usuario la cotizacion oficial del dolar para calcular 
 %  los precios en pesos argentinos.
 %
-%  Por ejemplo,
-%  ==
-%  ?- precio("AR1140", PrecioTurista, PrecioBussines).
-%  Ingrese la cotizacion oficial del dolar: 
-%  |: 100.
-%
-%  PrecioTurista = 156000.00000000003,
-%  PrecioBussines = 343200.0000000001.
-%  ==
 precio(N, PrecioTurista, PrecioBussines) :-
 	vuelo(_, N, IdOrigen, IdDestino, _, IdValor, _, _, _, _),
 	valor(IdValor, _Precio, _),
@@ -389,10 +286,6 @@ precio(N, PrecioTurista, PrecioBussines) :-
 %  Busca la cantidad de tripulantes Pilito, Copilotos y Azafatas que requiere 
 %  un vuelo N. 
 %
-%  Por ejemplo,
-%  ==
-%  ?- 
-%  ==
 tripulacion(N, Piloto, Copilotos, Azafatas) :-
 	duracion_vuelo(N, Duracion),	% falta implementar el inciso 5
 	vuelo(_, N, _, _, _, _, _, _, IdAvion, _),
@@ -409,18 +302,12 @@ tripulacion(N, Piloto, Copilotos, Azafatas) :-
 % 8. Calcular la ganancia que obtiene la empresa si logra vender un porcentaje 
 %    determinado de pasajes en clase turista y otro porcentaje de pasajes en 
 %    clase business para un vuelo específico.
-%
 
-%% ganancia(+N, -Piloto, -Copilotos, -Azafatas)
+%% ganancia(+N, +T, +B, -Ganancia)
 %
 %  Calcula la ganancia en dolares dado un vuelo N, el porcentaje de vendido del 
 %  vuelo en clase turista T y bussines B. 
 %
-%  Por ejemplo,
-%  ==
-%  ?- ganancia("AR1386", 50, 50, Ganancia).
-%  Ganancia = 9816.0.
-%  ==
 ganancia(N, T, B, Ganancia) :-
 	vuelo(_, N, IdOrigen, IdDestino, _, IdValor, _, _, IdAvion, _),
 	avion(IdAvion, _, _, _, Turista, Bussines),
@@ -456,7 +343,6 @@ sumar_uno_numero_vuelo(V, NumeroVuelo) :-
 	number_string(Numero, Sufijo),
 	sub_string(V, 0, 2, _, Prefijo),
 	string_concat(Prefijo, Sufijo, NumeroVuelo).
-
 
 distancia_avion_triangular(A, Distancia) :-
 	vuelo(_, NumeroVuelo1, IdOrigen, _, _, IdValor1, _, _, A, _),
@@ -497,3 +383,49 @@ distancia_vuelo_triangular(N, Distancia) :-
 %     tiempo de vuelo de cada tramo más los tiempos que el avión permanece en 
 %     una escala o ciudad.
 
+
+convertir_total_minutos_a_hora(Minutos,HorasFi,MinutosFi):-
+	HorasFi is div(Minutos,60),
+	MinutosFi is mod(Minutos,60).
+
+convertir_hora_a_integer(HoraString,Horas,Minutos):-
+	split_string(HoraString,":","",[HorasStr,MinutosStr]),
+	number_string(Horas,HorasStr),
+	number_string(Minutos,MinutosStr).
+
+diferencia_tiempo(HoraSalida,HoraLlegada,Difer):-
+	convertir_hora_a_integer(HoraSalida,HT1,MT1),
+	convertir_hora_a_integer(HoraLlegada,HT2,MT2),
+	TotalMinutos1 is HT1 * 60 + MT1,
+	TotalMinutos2 is HT2 * 60 + MT2,
+	%Esto en el caso que el horario de llegada es al otro dia, o sea pasada las 00:00 Hs
+	(TotalMinutos2 < TotalMinutos1 ->
+	   TotalMinutos2_modif is TotalMinutos2 + 24 * 60;
+	   TotalMinutos2_modif = TotalMinutos2),
+	Difer is TotalMinutos2_modif - TotalMinutos1.
+
+total_vuelo_duracion(HoraSalida,HoraLlegada,Duracion):-
+	diferencia_tiempo(HoraSalida,HoraLlegada,Duracion).
+
+tiempo_total_vuelo_triangular(NumVuelo):-
+	vuelo(_, NumVuelo, IdOrigen,_, _, _, HoraSal1, HoraLle1, IdAvion1, Difer1),
+	sumar_uno_numero_vuelo(NumVuelo, NumeroVuelo2),
+	vuelo(_, NumeroVuelo2, _,_, _, _, HoraSal2, HoraLle2, IdAvion2, Difer2),
+	IdAvion1 = IdAvion2,
+	sumar_uno_numero_vuelo(NumeroVuelo2, NumeroVuelo3),
+	vuelo(_, NumeroVuelo3, _,IdDestino, _, _, HoraSal3, HoraLle3, IdAvion3,Difer3),
+	IdAvion2 = IdAvion3,
+	IdOrigen = IdDestino,
+	total_vuelo_duracion(HoraSal1,HoraLle1,Dura1),
+	total_vuelo_duracion(HoraLle1,HoraSal2,Dura2),
+	total_vuelo_duracion(HoraSal2,HoraLle2,Dura3),
+	total_vuelo_duracion(HoraLle2,HoraSal3,Dura4),
+	total_vuelo_duracion(HoraSal3,HoraLle3,Dura5),
+	DifeCal1 is Difer1 * 60,
+	DifeCal2 is Difer2 * 60,
+	DifeCal3 is Difer3 * 60,
+	DuracionFinal is Dura1 + Dura2 + Dura3 + Dura4 + Dura5 + DifeCal1 + DifeCal2 + DifeCal3,
+	convertir_total_minutos_a_hora(DuracionFinal,HorasFin,MinutosFin),
+	write('La duracion del vuelo triangular ingresado es de: '),
+	write(HorasFin),write(' horas y '),
+	write(MinutosFin), write(' minutos.').
