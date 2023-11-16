@@ -236,9 +236,21 @@ duracion_vuelo(Vuelo) :-
 	DuracionFinal is Dur + DifeCal,
 	convertir_total_minutos_a_hora(DuracionFinal,HorasFin,MinutosFin),
 	Horas is HorasFin,
-	write('La duracion del vuelo ingresado es de:'),
+	write('La duracion del vuelo ingresado es de '),
 	write(Horas),write(' horas y '),
-	write(MinutosFin), write(' minutos,').
+	write(MinutosFin), write(' minutos.').
+
+
+duracion_vuelo(Vuelo, Horas) :-
+	vuelo(_, Vuelo, _,_, _, _, HoraSal, HoraLle, _, DifHor),
+	total_vuelo_duracion(HoraSal,HoraLle,Dur),
+	DifeCal is DifHor * 60,
+	DuracionFinal is Dur + DifeCal,
+	convertir_total_minutos_a_hora(DuracionFinal,HorasFin,MinutosFin),
+	Horas is HorasFin,
+	write('La duracion del vuelo ingresado es de '),
+	write(Horas),write(' horas y '),
+	write(MinutosFin), write(' minutos.').
 
 % =============================================================================
 
@@ -283,7 +295,6 @@ precios_vuelo(N) :-
 	write(' $ '),write(PrecioBussines).
 
 
-
 % =============================================================================
 
 % 7. Si se considera que un vuelo que dura más de 8 horas debe tener 1 auxiliar
@@ -299,7 +310,7 @@ precios_vuelo(N) :-
 %  un vuelo N.
 %
 tripulacion(N, Piloto, Copilotos, Azafatas) :-
-	duracion_vuelo(N),
+	duracion_vuelo(N, H),
 	vuelo(_, N, _, _, _, _, _, _, IdAvion, _),
 	avion(IdAvion, _, _, _, Turista, Business),
 	(H> 8 ->
