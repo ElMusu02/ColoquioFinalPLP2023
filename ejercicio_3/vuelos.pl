@@ -1,6 +1,6 @@
-% Hechos que almacenan los valores de las rutas de los vuelos que son iguales 
-% en ambas direcciones. 
-% valor(id, precio, distancia) 
+% Hechos que almacenan los valores de las rutas de los vuelos que son iguales
+% en ambas direcciones.
+% valor(id, precio, distancia)
 valor(1, 800, 11136). %  Roma - Buenos Aires
 valor(2, 280, 3147). % Buenos Aires - Lima
 valor(3, 615, 10062). % Madrid - Buenos Aires
@@ -14,10 +14,10 @@ valor(10, 150, 1141). % Buenos Aires - Santiago
 valor(11, 120, 1680). % Buenos Aires - Sao Paulo
 valor(12, 180, 2350). % Buenos Aires - Usuahia
 valor(13, 630, 10108). % Madrid - Cordoba
-valor(14, 30, 197). % Santiago - Mendoza 
+valor(14, 30, 197). % Santiago - Mendoza
 
 
-% Hechos que almacenan las ciudades 
+% Hechos que almacenan las ciudades
 % ciudad(id, nombre, pais)
 ciudad(1, "Buenos Aires", "Argentina").
 ciudad(2, "Madrid", "España").
@@ -98,11 +98,11 @@ avion(8, "Airbus", "A330-200", 10000, 186, 36).
 precio_turista_nacional(0.20, 0.05).
 precio_turista_internacional(0.60, 0.35).
 
-% Hecho que almacena el precio en clase bussines sobre el precio turista 
+% Hecho que almacena el precio en clase bussines sobre el precio turista
 precio_bussines(1.2).
 
-% Hecho que almacena la tripulacion de un vuelo 
-% tripulacion_vuelo___(copiloto, azafata)  
+% Hecho que almacena la tripulacion de un vuelo
+% tripulacion_vuelo___(copiloto, azafata)
 tripulacion_vuelo_largo(2, 25).
 tripulacion_vuelo_corto(1, 20).
 
@@ -115,15 +115,15 @@ tripulacion_vuelo_corto(1, 20).
 %
 %  Busca las ciudades de destino dada una ciudad de origen O.
 %
-ciudades_destino(O, Destino) :- 
+ciudades_destino(O, Destino) :-
 	ciudad(IdOrigen, O, _),
 	vuelo(_, _, IdOrigen, IdDestino, _, _, _, _, _, _),
 	ciudad(IdDestino, Destino, _).
 
 % =============================================================================
 
-% 2. Informar las rutas que realiza un modelo determinado de avión o los 
-%    aviones de un fabricante específico. 
+% 2. Informar las rutas que realiza un modelo determinado de avión o los
+%    aviones de un fabricante específico.
 
 %% rutas_modelo_o_fabricante(+M, +F, -Origen, -Destino, -IdAvion)
 %
@@ -134,16 +134,16 @@ rutas_modelo_o_fabricante(M, F, Origen, Destino, IdAvion) :-
 	vuelo(_, _, IdOrigen, IdDestino, _, _, _, _, IdAvion, _),
 	ciudad(IdOrigen, Origen, _),
 	ciudad(IdDestino, Destino, _),
-	avion(IdAvion, F, _, _, _, _). 
+	avion(IdAvion, F, _, _, _, _).
 
 % =============================================================================
 
-% 3. Informar las rutas que puede hacer un determinado avión, considerando su 
-%    rango de alcance y la distancia de la ruta. 
+% 3. Informar las rutas que puede hacer un determinado avión, considerando su
+%    rango de alcance y la distancia de la ruta.
 
 %% rutas_avion(+A, -Origen, -Destino)
 %
-%  Busca las rutas que puede realizar un modelo de avion A, teniendo en cuenta 
+%  Busca las rutas que puede realizar un modelo de avion A, teniendo en cuenta
 %  su rango de alcance y las distancia de las rutas.
 %
 rutas_avion(A, Origen, Destino) :-
@@ -159,7 +159,7 @@ rutas_avion(A, Origen, Destino) :-
 % =============================================================================
 
 % 4. Informar los vuelos que se realizan un determinado día, ordenados por hora
-%    de salida. 
+%    de salida.
 
 :- use_module(library(lists)).
 
@@ -186,7 +186,7 @@ mostrar_vuelos_ordenados([IdVuelo|Resto]) :-
 
 %% vuelos_dia(+D, -IdVuelo)
 %
-%  Busca los vuelos dado un dia D, que puede ser "LU", "MA", "MI", "JU", 
+%  Busca los vuelos dado un dia D, que puede ser "LU", "MA", "MI", "JU",
 %  "VI", "SA" o "DO". Los vuelos estan ordenados por horario de salida.
 %
 vuelos_dia(D) :-
@@ -197,9 +197,9 @@ vuelos_dia(D) :-
 
 % =============================================================================
 
-% 5. Calcular la duración de un determinado vuelo, considerando los horarios de 
-%    salida y llegada y las diferencias horarias que existen entre las ciudades 
-%    de origen y destino. 
+% 5. Calcular la duración de un determinado vuelo, considerando los horarios de
+%    salida y llegada y las diferencias horarias que existen entre las ciudades
+%    de origen y destino.
 
 convertir_total_minutos_a_hora(Minutos,HorasFi,MinutosFi):-
 	HorasFi is div(Minutos,60),
@@ -230,34 +230,35 @@ duracion_vuelo_final(Vuelo) :-
 	DifeCal is DifHor * 60,
 	DuracionFinal is Dur + DifeCal,
 	convertir_total_minutos_a_hora(DuracionFinal,HorasFin,MinutosFin),
+	Horas is HorasFin,
 	write('La duracion del vuelo ingresado es de:'),
-	write(HorasFin),write(' horas y '),
+	write(Horas),write(' horas y '),
 	write(MinutosFin), write(' minutos,').
 
 % =============================================================================
 
-% 6. Calcular el precio en pesos argentinos de un pasaje en clase turista y en 
-%    clase business para un determinado vuelo: 
-% 	 	- Para los vuelos internacionales (el origen o destino es una ciudad 
-%		  argentina y el otro no), el precio en clase turista se obtiene 
-%  		  sumando el precio base más las tasas e impuestos (equivalentes al 60% 
-%         del precio base) más los cargos de la empresa (35% del precio base). 
-%		- Para los vuelos nacionales (las ciudades origen y destino son 
-%         argentinas), el precio en clase turista se obtiene sumando el precio 
-%         base más las tasas e impuestos (equivalentes al 20% del precio base) 
-%		  más los cargos de la empresa (5% del precio base). 
-%    Luego, para obtener el precio en pesos argentinos, el usuario debe 
-%    ingresar la cotización oficial del dólar americano. Finalmente, el precio 
-%    del pasaje en clase business se obtiene sumandole un 120% al precio del 
+% 6. Calcular el precio en pesos argentinos de un pasaje en clase turista y en
+%    clase business para un determinado vuelo:
+%		- Para los vuelos internacionales (el origen o destino es una ciudad
+%		  argentina y el otro no), el precio en clase turista se obtiene
+%		  sumando el precio base más las tasas e impuestos (equivalentes al 60%
+%         del precio base) más los cargos de la empresa (35% del precio base).
+%		- Para los vuelos nacionales (las ciudades origen y destino son
+%         argentinas), el precio en clase turista se obtiene sumando el precio
+%         base más las tasas e impuestos (equivalentes al 20% del precio base)
+%		  más los cargos de la empresa (5% del precio base).
+%    Luego, para obtener el precio en pesos argentinos, el usuario debe
+%    ingresar la cotización oficial del dólar americano. Finalmente, el precio
+%    del pasaje en clase business se obtiene sumandole un 120% al precio del
 %    pasaje en clase turista.
 
 %% precio(+N, -PrecioTurista, -PrecioBussines)
 %
-%  Busca los precios en clase turista y bussines, dado un numero de vuelo N. Se 
-%  le solicita ingresar al usuario la cotizacion oficial del dolar para calcular 
+%  Busca los precios en clase turista y bussines, dado un numero de vuelo N. Se
+%  le solicita ingresar al usuario la cotizacion oficial del dolar para calcular
 %  los precios en pesos argentinos.
 %
-precio(N, PrecioTurista, PrecioBussines) :-
+precio(N) :-
 	vuelo(_, N, IdOrigen, IdDestino, _, IdValor, _, _, _, _),
 	valor(IdValor, _Precio, _),
 	ciudad(IdOrigen, _, PaisOrigen),
@@ -270,45 +271,51 @@ precio(N, PrecioTurista, PrecioBussines) :-
 	),
 	PrecioTurista is (_Precio * (1 + __Impuesto + __Cargo)) * _Cotizacion,
 	precio_bussines(__CargoBussines),
-	PrecioBussines is PrecioTurista * (1 + __CargoBussines). 
+	PrecioBussines is PrecioTurista * (1 + __CargoBussines),
+	write('Precio en clase turista:'),
+	write(' $ '),write(PrecioTurista),nl,
+	write('Precio en clase business:'),
+	write(' $ '),write(PrecioBussines).
+
+
 
 % =============================================================================
 
-% 7. Si se considera que un vuelo que dura más de 8 horas debe tener 1 auxiliar 
-%    de abordo (azafata) cada 25 asientos del avión, más 1 piloto y 2 copilotos, 
-%    y uno que dura menos de 8 horas debe tener 1 auxiliar de abordo (azafata) 
-%    cada 20 asientos del avión, más 1 piloto y 1 copiloto, calcular la 
-%    cantidad de personas que componen la tripulación completa (piloto mas 
+% 7. Si se considera que un vuelo que dura más de 8 horas debe tener 1 auxiliar
+%    de abordo (azafata) cada 25 asientos del avión, más 1 piloto y 2 copilotos,
+%    y uno que dura menos de 8 horas debe tener 1 auxiliar de abordo (azafata)
+%    cada 20 asientos del avión, más 1 piloto y 1 copiloto, calcular la
+%    cantidad de personas que componen la tripulación completa (piloto mas
 %    copiloto/s mas auxiliares de abordo) para un determinado vuelo.
 
 %% tripulacion(+N, -Piloto, -Copilotos, -Azafatas)
 %
-%  Busca la cantidad de tripulantes Pilito, Copilotos y Azafatas que requiere 
-%  un vuelo N. 
+%  Busca la cantidad de tripulantes Pilito, Copilotos y Azafatas que requiere
+%  un vuelo N.
 %
 tripulacion(N, Piloto, Copilotos, Azafatas) :-
-	duracion_vuelo(N, Duracion),	% falta implementar el inciso 5
+	duracion_vuelo_final(N,H),
 	vuelo(_, N, _, _, _, _, _, _, IdAvion, _),
 	avion(IdAvion, _, _, _, Turista, Business),
-	(Duracion > 8 ->
+	(H> 8 ->
 		tripulacion_vuelo_largo(Copilotos, __Asafata)
-	;	tripulacion_vuelo_corto(Copilotos, __Asafata)	
+	;	tripulacion_vuelo_corto(Copilotos, __Asafata)
 	),
 	Azafatas is round((Turista + Business) / __Asafata),
 	Piloto is 1.
 
 % =============================================================================
 
-% 8. Calcular la ganancia que obtiene la empresa si logra vender un porcentaje 
-%    determinado de pasajes en clase turista y otro porcentaje de pasajes en 
+% 8. Calcular la ganancia que obtiene la empresa si logra vender un porcentaje
+%    determinado de pasajes en clase turista y otro porcentaje de pasajes en
 %    clase business para un vuelo específico.
 
 %% ganancia(+N, +T, +B, -Ganancia)
 %
-%  Calcula la ganancia en dolares dado un vuelo N, el porcentaje de vendido del 
-%  vuelo en clase turista T y bussines B. 
+%  Calcula la ganancia en dolares dado un vuelo N, el porcentaje de vendido del
+%  vuelo en clase turista T y bussines B.
 %
-ganancia(N, T, B, Ganancia) :-
+ganancia(N, T, B) :-
 	vuelo(_, N, IdOrigen, IdDestino, _, IdValor, _, _, IdAvion, _),
 	avion(IdAvion, _, _, _, Turista, Bussines),
 	integer(Turista),
@@ -326,19 +333,22 @@ ganancia(N, T, B, Ganancia) :-
 	GananciaTurista is _Precio * (1 + __Cargo),
 	precio_bussines(__CargoBussines),
 	GananciaBussines is PrecioTurista * (1 + __CargoBussines),
-	Ganancia is TuristaVendidos * GananciaTurista + BussinesVendidos * GananciaBussines.
+	Ganancia is TuristaVendidos * GananciaTurista + BussinesVendidos * GananciaBussines,
+	write('La ganacia de la empresa es de:'),
+	write(' $ '),write(Ganancia).
+
 
 % =============================================================================
 
-% 9. Calcular la distancia recorrida por un avión que realiza un vuelo 
-%    triangular, es decir, primero realiza la ruta de la ciudad A a la ciudad 
-%    B, luego la ruta de la ciudad B a la ciudad C y finalmente la ruta de la 
-%    ciudad C a la ciudad A. Un vuelo triangular se identifica con números de 
-%    vuelos correlativos. 
+% 9. Calcular la distancia recorrida por un avión que realiza un vuelo
+%    triangular, es decir, primero realiza la ruta de la ciudad A a la ciudad
+%    B, luego la ruta de la ciudad B a la ciudad C y finalmente la ruta de la
+%    ciudad C a la ciudad A. Un vuelo triangular se identifica con números de
+%    vuelos correlativos.
 
 sumar_uno_numero_vuelo(V, NumeroVuelo) :-
 	sub_string(V, 2, 4, _, CadenaNum),
-	number_string(Num, CadenaNum), 
+	number_string(Num, CadenaNum),
 	Numero is Num + 1,
 	number_string(Numero, Sufijo),
 	sub_string(V, 0, 2, _, Prefijo),
@@ -358,7 +368,7 @@ distancia_avion_triangular(A, Distancia) :-
 	valor(IdValor3, _, Distancia3),
 	Distancia is Distancia1 + Distancia2 + Distancia3.
 
-distancia_vuelo_triangular(N, Distancia) :-
+distancia_vuelo_triangular(N) :-
 	vuelo(_, N, IdOrigen, _, _, IdValor1, _, _, IdAvion1, _),
 	sumar_uno_numero_vuelo(N, NumeroVuelo2),
 	vuelo(_, NumeroVuelo2, _, _, _, IdValor2, _, _, IdAvion2, _),
@@ -370,17 +380,20 @@ distancia_vuelo_triangular(N, Distancia) :-
 	valor(IdValor1, _, Distancia1),
 	valor(IdValor2, _, Distancia2),
 	valor(IdValor3, _, Distancia3),
-	Distancia is Distancia1 + Distancia2 + Distancia3.
+	Distancia is Distancia1 + Distancia2 + Distancia3,
+	write('La duracion del vuelo triangular ingresado es de:'),
+	write(Distancia),write(' Km ').
+
 
 
 % =============================================================================
 
-% 10. Calcular el tiempo total que demanda la realización de un vuelo 
-%     triangular. Un vuelo triangular es aquel que primero realiza la ruta de 
-%     la ciudad A a la ciudad B, luego la ruta de la ciudad B a la ciudad C y 
-%     finalmente la ruta de la ciudad C a la ciudad A. Un vuelo triangular se 
-%     identifica con números de vuelos correlativos. El tiempo tal incluye el 
-%     tiempo de vuelo de cada tramo más los tiempos que el avión permanece en 
+% 10. Calcular el tiempo total que demanda la realización de un vuelo
+%     triangular. Un vuelo triangular es aquel que primero realiza la ruta de
+%     la ciudad A a la ciudad B, luego la ruta de la ciudad B a la ciudad C y
+%     finalmente la ruta de la ciudad C a la ciudad A. Un vuelo triangular se
+%     identifica con números de vuelos correlativos. El tiempo tal incluye el
+%     tiempo de vuelo de cada tramo más los tiempos que el avión permanece en
 %     una escala o ciudad.
 
 
@@ -429,3 +442,36 @@ tiempo_total_vuelo_triangular(NumVuelo):-
 	write('La duracion del vuelo triangular ingresado es de: '),
 	write(HorasFin),write(' horas y '),
 	write(MinutosFin), write(' minutos.').
+
+%Menu principal que muestra las funciones que tengo para utilizar
+menu_principal:-
+	write('Sistema de vuelos y aviones:'),nl,
+	nl,
+	write('1)Escriba "ciudades_destino(OrigenCiudad, Destinos)." para mostrar las ciudades destino de una ciudad origen que ingrese.'),nl,
+	nl,
+	write('2)Escriba "rutas_modelo_o_fabricante(Modelo, Fabric, Origen, Destino, IdAvion)." para mostrar las rutas de un determinado modelo de avion o los aviones de un determinado fabricante.'),nl,
+	nl,
+	write('3)Escriba "rutas_avion(NumAvion, Origen, Destino)." para mostrar las rutas que hace un determinado avion de acuerdo a su rango de alcance y la distancia de la ruta.'),nl,
+	nl,
+	write('4)Escriba "vuelos_dia(Dia)." para mostrar los vuelos que se hacen en un determinado dia.'),nl,
+	nl,
+	write('5)Escriba "duracion_vuelo_final(Vuelo)." para mostrar la duracion de un determinado vuelo.'),nl,
+	nl,
+	write('6)Escriba "precio(NumVuelo)." para mostrar el precio en pesos argentinos de un pasaje en clase turista y en clase business para un determinado vuelo.'),nl,
+	nl,
+	write('7)Escriba "tripulacion(NumVuelo, Piloto, Copilotos, Azafatas)." para mostrar la tripulacion completa de un determinado vuelo.'),nl,
+	nl,
+	write('8)Escriba "ganancia(NumVuelo, TuristaCanti, BusinessCanti)." para mostrar ganancia que obtiene la empresa si logra vender un porcentaje determinado de pasajes en clase turista y otro porcentaje en clase business para un vuelo especifico.'),nl,
+	nl,
+	write('9)Escriba "distancia_vuelo_triangular(NumVuelo)." para mostrar la distancia recorrida por un avion que realiza un vuelo triangular.'),nl,
+	nl,
+	write('10)Escriba "tiempo_total_vuelo_triangular(NumVuelo)." para mostrar el tiempo total que demanda la realizacion de un vuelo triangular.'),nl.
+
+
+
+
+
+
+
+
+
