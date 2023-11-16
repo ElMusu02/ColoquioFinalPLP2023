@@ -444,29 +444,48 @@ tiempo_total_vuelo_triangular(NumVuelo):-
 	write(MinutosFin), write(' minutos.').
 
 %Menu principal que muestra las funciones que tengo para utilizar
-menu_principal:-
-	write('Sistema de vuelos y aviones:'),nl,
-	nl,
-	write('1)Escriba "ciudades_destino(OrigenCiudad, Destinos)." para mostrar las ciudades destino de una ciudad origen que ingrese.'),nl,
-	nl,
-	write('2)Escriba "rutas_modelo_o_fabricante(M, F, Origen, Destino, IdAvion)." para mostrar las rutas de un determinado modelo de avion o los aviones de un determinado fabricante.'),nl,
-	nl,
-	write('3)Escriba "rutas_avion(A, Origen, Destino)." para mostrar las rutas que hace un determinado avion de acuerdo a su rango de alcance y la distancia de la ruta.'),nl,
-	nl,
-	write('4)Escriba "vuelos_dia(D)." para mostrar los vuelos que se hacen en un determinado dia.'),nl,
-	nl,
-	write('5)Escriba "duracion_vuelo_final(Vuelo)." para mostrar la duracion de un determinado vuelo.'),nl,
-	nl,
-	write('6)Escriba "precio(N)." para mostrar el precio en pesos argentinos de un pasaje en clase turista y en clase business para un determinado vuelo.'),nl,
-	nl,
-	write('7)Escriba "tripulacion(N, Piloto, Copilotos, Azafatas)." para mostrar la tripulacion completa de un determinado vuelo.'),nl,
-	nl,
-	write('8)Escriba "ganancia(N, T, B)." para mostrar ganancia que obtiene la empresa si logra vender un porcentaje determinado de pasajes en clase turista y otro porcentaje en clase business para un vuelo especifico.'),nl,
-	nl,
-	write('9)Escriba "distancia_vuelo_triangular(N)." para mostrar la distancia recorrida por un avion que realiza un vuelo triangular.'),nl,
-	nl,
-	write('10)Escriba "tiempo_total_vuelo_triangular(NumVuelo)." para mostrar el tiempo total que demanda la realizacion de un vuelo triangular.'),nl.
+:- use_module(library(cli_table)).
 
+opciones :-
+	Datos = [
+		['1', 'ciudades_destino(+O, -Destino)'],
+		['2', 'rutas_modelo_o_fabricante(+M, +F, -Origen, -Destino, -IdAvion)'],
+		['3', 'rutas_avion(+A, -Origen, -Destino)'],
+		['4', 'vuelos_dia(+D)'],
+		['5', 'duracion_vuelo_final(+N)'],
+		['6', 'precio(+N)'],
+		['7', 'tripulacion(+N, -Piloto, -Copilotos, -Azafatas)'],
+		['8', 'ganancia(+N, +T, +B)'],
+		['9', 'distancia_vuelo_triangular(+N)'],
+		['10', 'tiempo_vuelo_triangular(+N)']
+	],
+	Cabecera = ['Numero', 'Opciones'],
+	cli_table(Datos, [head(Cabecera)]).
+
+
+descripciones :-
+	Datos = [
+		['1', 'Busca las ciudades de destino dada una ciudad de origen O.'],
+		['2', 'Busca las rutas que realiza un modelo de avion M, o un fabricante F.'],
+		['3', 'Busca las rutas que puede realizar un modelo de avion A, teniendo en cuenta'],
+		['', 'su rango de alcance y las distancia de las rutas.'],
+		['4', 'Informa los vuelos de un dia D, que pueden ser "LU", "MA", "MI", "JU",'],
+		['', '"VI", "SA" o "DO". Los vuelos estan ordenados por horario de salida.'],
+		['5', 'Informa la duracion del vuelo dado el numero de vuelo N, considerando los '],
+		['', 'horarios de salida y llegada y las diferencias horarias entre ciudades.'],
+		['6', 'Busca los precios en clase turista y bussines, dado un numero de vuelo V. Se'],
+		['', 'le solicita ingresar al usuario la cotizacion oficial del dolar para calcular'],
+		['', 'los precios en pesos argentinos.'],
+		['7', 'Busca la cantidad de tripulantes Pilito, Copilotos y Azafatas que requiere'],
+		['', 'un vuelo N. '],
+		['8', 'Calcula la ganancia en dolares dado un vuelo N, el porcentaje de vendido del'],
+		['', 'vuelo en clase turista T y bussines B. '],
+		['9', 'Calcula la distancia dado el numero de un vuelo N, que realiza una ruta'],
+		['', 'triangular. '],
+		['10', 'Informa el tiempo total que demanda realizar un vuelo triangular N.']
+	],
+	Cabecera = ['Numero', 'Descripcion'],
+	cli_table(Datos, [head(Cabecera)]).
 
 
 
