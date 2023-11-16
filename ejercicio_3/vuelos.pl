@@ -299,7 +299,7 @@ precios_vuelo(N) :-
 %  un vuelo N.
 %
 tripulacion(N, Piloto, Copilotos, Azafatas) :-
-	duracion_vuelo_final(N,H),
+	duracion_vuelo(N),
 	vuelo(_, N, _, _, _, _, _, _, IdAvion, _),
 	avion(IdAvion, _, _, _, Turista, Business),
 	(H> 8 ->
