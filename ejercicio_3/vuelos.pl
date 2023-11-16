@@ -158,7 +158,7 @@ rutas_avion(A, Origen, Destino) :-
 
 % =============================================================================
 
-% 4. Informar los vuelos que se realizan un determinado d�a, ordenados por hora
+% 4. Informar los vuelos que se realizan un determinado d�a, ordenados por hora
 %    de salida.
 
 :- use_module(library(lists)).
@@ -223,7 +223,13 @@ diferencia_tiempo(HoraSalida,HoraLlegada,Difer):-
 total_vuelo_duracion(HoraSalida,HoraLlegada,Duracion):-
 	diferencia_tiempo(HoraSalida,HoraLlegada,Duracion).
 
-duracion_vuelo_final(Vuelo) :-
+%% duracion_vuelo(+N)
+%
+%  Informa la duracion del vuelo dado el numero de vuelo N, considerando los 
+%  horarios de salida y llegada y las diferencias horarias que existen entre 
+%  las ciudades de origen y destino. 
+%
+duracion_vuelo(Vuelo) :-
 	vuelo(_, Vuelo, _,_, _, _, HoraSal, HoraLle, _, DifHor),
 	total_vuelo_duracion(HoraSal,HoraLle,Dur),
 	DifeCal is DifHor * 60,
@@ -232,7 +238,7 @@ duracion_vuelo_final(Vuelo) :-
 	Horas is HorasFin,
 	write('La duracion del vuelo ingresado es de:'),
 	write(Horas),write(' horas y '),
-	write(MinutosFin), write(' minutos,').
+	write(MinutosFin), write(' minutos,').
 
 % =============================================================================
 
@@ -251,13 +257,13 @@ duracion_vuelo_final(Vuelo) :-
 %    del pasaje en clase business se obtiene sumandole un 120% al precio del
 %    pasaje en clase turista.
 
-%% precio(+N, -PrecioTurista, -PrecioBussines)
+%% precios_vuelo(+N)
 %
-%  Busca los precios en clase turista y bussines, dado un numero de vuelo N. Se
+%  Informa los precios en clase turista y bussines, dado un numero de vuelo N. Se
 %  le solicita ingresar al usuario la cotizacion oficial del dolar para calcular
 %  los precios en pesos argentinos.
 %
-precio(N) :-
+precios_vuelo(N) :-
 	vuelo(_, N, IdOrigen, IdDestino, _, IdValor, _, _, _, _),
 	valor(IdValor, _Precio, _),
 	ciudad(IdOrigen, _, PaisOrigen),
@@ -309,9 +315,9 @@ tripulacion(N, Piloto, Copilotos, Azafatas) :-
 %    determinado de pasajes en clase turista y otro porcentaje de pasajes en
 %    clase business para un vuelo específico.
 
-%% ganancia(+N, +T, +B, -Ganancia)
+%% ganancia(+N, +T, +B)
 %
-%  Calcula la ganancia en dolares dado un vuelo N, el porcentaje de vendido del
+%  Informa la ganancia en dolares dado un vuelo N, el porcentaje de vendido del
 %  vuelo en clase turista T y bussines B.
 %
 ganancia(N, T, B) :-
@@ -367,6 +373,11 @@ distancia_avion_triangular(A, Distancia) :-
 	valor(IdValor3, _, Distancia3),
 	Distancia is Distancia1 + Distancia2 + Distancia3.
 
+%% distancia_vuelo_triangular(+N)
+%
+%  Informa la distancia dado el numero de un vuelo N, que realiza una ruta 
+%  triangular. 
+%
 distancia_vuelo_triangular(N) :-
 	vuelo(_, N, IdOrigen, _, _, IdValor1, _, _, IdAvion1, _),
 	sumar_uno_numero_vuelo(N, NumeroVuelo2),
@@ -419,7 +430,11 @@ diferencia_tiempo(HoraSalida,HoraLlegada,Difer):-
 total_vuelo_duracion(HoraSalida,HoraLlegada,Duracion):-
 	diferencia_tiempo(HoraSalida,HoraLlegada,Duracion).
 
-tiempo_total_vuelo_triangular(NumVuelo):-
+%% tiempo_vuelo_triangular(+N)
+%
+%  Informa el tiempo total que demanda realizar un vuelo triangular N.
+%
+tiempo_vuelo_triangular(NumVuelo):-
 	vuelo(_, NumVuelo, IdOrigen,_, _, _, HoraSal1, HoraLle1, IdAvion1, Difer1),
 	sumar_uno_numero_vuelo(NumVuelo, NumeroVuelo2),
 	vuelo(_, NumeroVuelo2, _,_, _, _, HoraSal2, HoraLle2, IdAvion2, Difer2),
@@ -451,8 +466,8 @@ opciones :-
 		['2', 'rutas_modelo_o_fabricante(+M, +F, -Origen, -Destino, -IdAvion)'],
 		['3', 'rutas_avion(+A, -Origen, -Destino)'],
 		['4', 'vuelos_dia(+D)'],
-		['5', 'duracion_vuelo_final(+N)'],
-		['6', 'precio(+N)'],
+		['5', 'duracion_vuelo(+N)'],
+		['6', 'precios_vuelo(+N)'],
 		['7', 'tripulacion(+N, -Piloto, -Copilotos, -Azafatas)'],
 		['8', 'ganancia(+N, +T, +B)'],
 		['9', 'distancia_vuelo_triangular(+N)'],
@@ -472,7 +487,7 @@ descripciones :-
 		['', '"VI", "SA" o "DO". Los vuelos estan ordenados por horario de salida.'],
 		['5', 'Informa la duracion del vuelo dado el numero de vuelo N, considerando los '],
 		['', 'horarios de salida y llegada y las diferencias horarias entre ciudades.'],
-		['6', 'Busca los precios en clase turista y bussines, dado un numero de vuelo V. Se'],
+		['6', 'Informa los precios en clase turista y bussines, dado un numero de vuelo V. Se'],
 		['', 'le solicita ingresar al usuario la cotizacion oficial del dolar para calcular'],
 		['', 'los precios en pesos argentinos.'],
 		['7', 'Busca la cantidad de tripulantes Pilito, Copilotos y Azafatas que requiere'],
